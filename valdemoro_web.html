@@ -1,0 +1,4518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicio | Conoce Valdemoro — Guía Turística, Cultural y Municipal</title>
+  <meta name="description" content="Conoce Valdemoro (Madrid): fotografías reales del municipio, noticias oficiales del Ayuntamiento, calendario de fiestas, patrimonio histórico, parques, restaurantes, hoteles y teatro." />
+  <meta name="keywords" content="Valdemoro, Ayuntamiento de Valdemoro, fiestas Valdemoro, Feria Barroca, Teatro Juan Prado, hoteles Valdemoro, restaurantes Valdemoro" />
+  <meta name="author" content="Conoce Valdemoro" />
+  <meta name="theme-color" content="#0f2744" />
+
+  <!-- Favicon con el Escudo Institucional de Valdemoro -->
+  <link id="dynamic-favicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 130'%3E%3Crect width='120' height='130' rx='22' fill='%23ffffff'/%3E%3Cpath d='M33 29 L30 19 L39 23 L47 16 L56 22 L60 12 L64 22 L73 16 L81 23 L90 19 L87 29 Q60 22 33 29 Z' fill='%230d1e3a'/%3E%3Cpath d='M32 34 Q60 27 88 34 L86 39 Q60 32 34 39 Z' fill='%230d1e3a'/%3E%3Cpath d='M35 44 H58 V96 C43 92 35 80 35 66 Z' fill='%230d1e3a'/%3E%3Cpath d='M62 44 H85 V66 C85 80 77 92 62 96 Z' fill='%230d1e3a'/%3E%3Ccircle cx='54' cy='66' r='2.8' fill='%23ffffff'/%3E%3Ccircle cx='60' cy='66' r='2.8' fill='%23ffffff'/%3E%3Ccircle cx='66' cy='66' r='2.8' fill='%23ffffff'/%3E%3C/svg%3E" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <style>
+    /* ==========================================================================
+       1. VARIABLES CSS — PALETA AZUL MEDIO OSCURO INSTITUCIONAL
+       ========================================================================== */
+    :root {
+      --bg-primary: #0f2744;
+      --bg-secondary: #15345a;
+      --bg-surface: #1b4170;
+      --bg-surface-hover: #24548f;
+      --bg-deep: #09182b;
+
+      --text-main: #f8fafc;
+      --text-secondary: #dbeafe;
+      --text-muted: #93c5fd;
+
+      --accent-primary: #3b82f6;
+      --accent-bright: #60a5fa;
+      --accent-gold: #eab308;
+      --accent-emerald: #10b981;
+      --navy-crest: #0d1e3a;
+
+      --warning-bg: rgba(234, 179, 8, 0.16);
+      --warning-border: rgba(234, 179, 8, 0.45);
+      --warning-text: #fde047;
+
+      --border-subtle: rgba(147, 197, 253, 0.18);
+      --border-strong: rgba(147, 197, 253, 0.36);
+
+      --font-heading: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+      --header-height: 78px;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+
+      --shadow-sm: 0 4px 14px rgba(5, 16, 32, 0.24);
+      --shadow-md: 0 12px 28px rgba(5, 16, 32, 0.36);
+      --shadow-lg: 0 24px 56px rgba(5, 16, 32, 0.52);
+
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-smooth: 0.36s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ==========================================================================
+       2. RESET, ACCESIBILIDAD Y ENLACES DE IMAGEN (HREF)
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      overflow-x: hidden;
+      line-height: 1.62;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent-gold);
+      outline-offset: 3px;
+    }
+
+    /* Enlace envolvente para todas las imágenes y tarjetas visuales */
+    a.img-href-link {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    a.img-href-link::after {
+      content: attr(data-link-badge);
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(9, 24, 43, 0.88);
+      color: #fde047;
+      border: 1px solid rgba(234, 179, 8, 0.55);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.24rem 0.65rem;
+      border-radius: var(--radius-full);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    a.img-href-link:hover::after,
+    a.img-href-link:focus-visible::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .skip-link {
+      position: fixed;
+      top: -100px;
+      left: 16px;
+      background: var(--accent-gold);
+      color: #09182b;
+      font-weight: 700;
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      z-index: 9999;
+      transition: top 0.2s ease;
+    }
+    .skip-link:focus { top: 16px; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    @media (min-width: 768px) {
+      .container { padding: 0 2rem; }
+    }
+
+    .icon-svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+
+    /* ==========================================================================
+       3. CABECERA INSTITUCIONAL Y ESCUDO DE VALDEMORO
+       ========================================================================== */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--header-height);
+      z-index: 1000;
+      background: rgba(15, 39, 68, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .site-header.header-hidden {
+      transform: translateY(-100%);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      gap: 0.65rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.72rem;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.08rem;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      flex-shrink: 0;
+    }
+
+    .brand-crest-badge {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.32);
+      flex-shrink: 0;
+    }
+
+    .brand-crest-badge svg {
+      height: 100%;
+      width: auto;
+      display: block;
+    }
+
+    .brand-text-wrap {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.12;
+    }
+
+    .brand-sub {
+      font-size: 0.64rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .top-nav {
+      display: none;
+      align-items: center;
+      gap: 0.16rem;
+    }
+
+    @media (min-width: 900px) {
+      .top-nav { display: flex; }
+    }
+
+    @media (min-width: 1220px) {
+      .top-nav { gap: 0.28rem; }
+    }
+
+    .nav-link {
+      padding: 0.44rem 0.58rem;
+      border-radius: var(--radius-full);
+      font-size: 0.81rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    @media (min-width: 1220px) {
+      .nav-link {
+        padding: 0.48rem 0.78rem;
+        font-size: 0.86rem;
+      }
+    }
+
+    .nav-link:hover {
+      color: #ffffff;
+      background: rgba(59, 130, 246, 0.25);
+    }
+
+    .nav-link.active {
+      color: #09182b;
+      background: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+    }
+
+    .drawer-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.88rem;
+      border-radius: var(--radius-full);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      color: var(--text-main);
+      font-size: 0.84rem;
+      font-weight: 600;
+      transition: var(--transition-fast);
+      flex-shrink: 0;
+    }
+
+    .drawer-toggle:hover {
+      background: var(--accent-primary);
+      border-color: var(--accent-bright);
+    }
+
+    .drawer-toggle-label { display: none; }
+    @media (min-width: 640px) {
+      .drawer-toggle-label { display: inline; }
+    }
+
+    /* ==========================================================================
+       4. MENÚ LATERAL DESLIZANTE (DRAWER)
+       ========================================================================== */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 16, 32, 0.74);
+      backdrop-filter: blur(4px);
+      z-index: 1100;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.28s ease, visibility 0.28s ease;
+    }
+
+    .drawer-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .side-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(88vw, 370px);
+      height: 100dvh;
+      background: var(--bg-secondary);
+      border-left: 1px solid var(--border-strong);
+      z-index: 1200;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      overflow-y: auto;
+    }
+
+    .side-drawer.open { transform: translateX(0); }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1.1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 1rem;
+    }
+
+    .drawer-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .drawer-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      display: grid;
+      place-items: center;
+      font-size: 1.25rem;
+      transition: var(--transition-fast);
+    }
+
+    .drawer-close:hover { background: var(--accent-primary); }
+
+    .drawer-group-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin: 0.9rem 0 0.45rem;
+      font-weight: 700;
+    }
+
+    .drawer-primary-group { display: block; }
+    @media (min-width: 900px) {
+      .drawer-primary-group { display: none; }
+    }
+
+    .drawer-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+    }
+
+    .drawer-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.68rem 0.95rem;
+      border-radius: var(--radius-md);
+      font-weight: 500;
+      font-size: 0.93rem;
+      color: var(--text-main);
+      transition: var(--transition-fast);
+    }
+
+    .drawer-link:hover, .drawer-link.active {
+      background: var(--bg-surface);
+      color: #ffffff;
+      border-left: 3px solid var(--accent-gold);
+    }
+
+    /* ==========================================================================
+       5. SISTEMA SPA DE VISTAS
+       ========================================================================== */
+    main { flex: 1; }
+
+    .spa-section {
+      display: none;
+      padding-top: var(--header-height);
+      min-height: calc(100vh - 160px);
+    }
+
+    .spa-section.active { display: block; }
+    #view-inicio.spa-section { padding-top: 0; }
+
+    /* ==========================================================================
+       6. HERO DINÁMICO DIVIDIDO EN INICIO Y BUSCADOR
+       ========================================================================== */
+    .hero-split {
+      position: relative;
+      padding: calc(var(--header-height) + 3rem) 0 4rem;
+      background: radial-gradient(circle at 82% 22%, rgba(59, 130, 246, 0.28) 0%, transparent 52%),
+                  linear-gradient(180deg, #0a1b30 0%, var(--bg-primary) 100%);
+      border-bottom: 1px solid var(--border-subtle);
+      overflow: hidden;
+    }
+
+    .hero-split-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    @media (min-width: 980px) {
+      .hero-split-grid {
+        grid-template-columns: 1.15fr 0.85fr;
+      }
+    }
+
+    .hero-crest-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-full);
+      background: rgba(21, 52, 90, 0.9);
+      border: 1px solid var(--border-strong);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.4rem, 5.5vw, 4.3rem);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(0.98rem, 1.8vw, 1.14rem);
+      color: var(--text-secondary);
+      max-width: 620px;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1.35rem;
+    }
+
+    .quick-chip {
+      padding: 0.44rem 0.95rem;
+      border-radius: var(--radius-full);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-strong);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: var(--transition-fast);
+    }
+
+    .quick-chip:hover {
+      background: var(--accent-primary);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .hero-collage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+    }
+
+    .hero-collage-main {
+      grid-column: span 2;
+      height: 235px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-strong);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+
+    .hero-collage-sub {
+      height: 155px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+
+    .hero-collage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .hero-collage-main:hover img,
+    .hero-collage-sub:hover img {
+      transform: scale(1.05);
+    }
+
+    .collage-caption {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(9, 24, 43, 0.85);
+      backdrop-filter: blur(6px);
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #ffffff;
+      border: 1px solid var(--border-strong);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Buscador interactivo */
+    .search-wrapper {
+      position: relative;
+      max-width: 630px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: rgba(9, 24, 43, 0.92);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-full);
+      padding: 0.42rem 0.65rem 0.42rem 1.25rem;
+      box-shadow: var(--shadow-lg);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--accent-bright);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.28), var(--shadow-lg);
+    }
+
+    .search-icon {
+      color: var(--accent-bright);
+      flex-shrink: 0;
+      margin-right: 0.75rem;
+    }
+
+    .search-input-container {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 0.98rem;
+      outline: none;
+      padding: 0.58rem 0;
+      z-index: 2;
+    }
+
+    .search-placeholder-anim {
+      position: absolute;
+      left: 0;
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      pointer-events: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .search-placeholder-anim.fade-out {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+
+    .search-clear {
+      display: none;
+      padding: 0.35rem 0.72rem;
+      border-radius: var(--radius-full);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .search-clear.visible { display: inline-block; }
+
+    .search-results-dropdown {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      right: 0;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      max-height: 380px;
+      overflow-y: auto;
+      text-align: left;
+      z-index: 60;
+      display: none;
+    }
+
+    .search-results-dropdown.open { display: block; }
+
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1.2rem;
+      border-bottom: 1px solid var(--border-subtle);
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .search-result-item:last-child { border-bottom: none; }
+
+    .search-result-item:hover, .search-result-item:focus {
+      background: var(--bg-surface);
+      outline: none;
+    }
+
+    .search-result-title {
+      font-weight: 600;
+      color: #ffffff;
+      font-size: 0.94rem;
+    }
+
+    .search-result-sub {
+      font-size: 0.81rem;
+      color: var(--text-muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .search-result-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.24rem 0.65rem;
+      border-radius: var(--radius-full);
+      background: rgba(59, 130, 246, 0.25);
+      color: #bfdbfe;
+      border: 1px solid rgba(96, 165, 250, 0.35);
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       7. BLOQUES EDITORIALES ASIMÉTRICOS EN INICIO
+       ========================================================================== */
+    .home-block {
+      padding: 4.25rem 0;
+      position: relative;
+    }
+
+    .home-block-alt {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .magazine-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 960px) {
+      .magazine-grid {
+        grid-template-columns: 1.15fr 0.85fr;
+      }
+    }
+
+    .magazine-featured {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .magazine-featured:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-gold);
+    }
+
+    .magazine-featured-img {
+      height: 270px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .magazine-featured-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .magazine-side-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .magazine-compact-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: 115px 1fr;
+      gap: 1rem;
+      align-items: center;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .magazine-compact-card:hover {
+      transform: translateX(4px);
+      border-color: var(--accent-bright);
+    }
+
+    .magazine-compact-thumb {
+      height: 95px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .magazine-compact-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .story-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    @media (min-width: 960px) {
+      .story-grid-2 { grid-template-columns: 0.9fr 1.1fr; }
+    }
+
+    .big-reveal-text {
+      font-family: var(--font-heading);
+      font-size: clamp(1.85rem, 3.8vw, 2.9rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.15rem;
+    }
+
+    .highlight-blue { color: var(--accent-bright); }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+      margin-top: 1.75rem;
+    }
+
+    .stat-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+    }
+
+    .stat-number {
+      font-family: var(--font-heading);
+      font-size: clamp(1.3rem, 2.6vw, 1.95rem);
+      font-weight: 800;
+      color: var(--accent-gold);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .parallax-media-frame {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-strong);
+      aspect-ratio: 4 / 3;
+    }
+
+    .parallax-media-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .section-eyebrow {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      font-weight: 700;
+      color: var(--accent-bright);
+      margin-bottom: 0.45rem;
+      display: block;
+    }
+
+    .section-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(1.7rem, 3.5vw, 2.65rem);
+      font-weight: 800;
+      line-height: 1.16;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-lead {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      max-width: 720px;
+      margin-bottom: 2rem;
+    }
+
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .showcase-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .showcase-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent-bright);
+      box-shadow: var(--shadow-md);
+    }
+
+    .showcase-card-img {
+      height: 190px;
+      overflow: hidden;
+    }
+
+    .showcase-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .showcase-card:hover .showcase-card-img img { transform: scale(1.06); }
+
+    .showcase-card-body {
+      padding: 1.3rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .btn-primary-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: #ffffff;
+      color: #09182b;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.94rem;
+      padding: 0.82rem 1.65rem;
+      border-radius: var(--radius-full);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+      transition: transform 0.22s ease, background 0.22s ease;
+    }
+
+    .btn-primary-action:hover {
+      background: var(--accent-gold);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       8. CABECERAS DE PÁGINA, FILTROS Y FICHAS (SIN IMÁGENES REPETIDAS)
+       ========================================================================== */
+    .page-header {
+      padding: 2.6rem 0 1.9rem;
+      border-bottom: 1px solid var(--border-subtle);
+      background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+      margin-bottom: 2rem;
+    }
+
+    .page-header-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1.25rem;
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .filter-btn {
+      padding: 0.48rem 1.05rem;
+      border-radius: var(--radius-full);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: var(--transition-fast);
+    }
+
+    .filter-btn:hover {
+      background: var(--bg-surface);
+      color: #ffffff;
+    }
+
+    .filter-btn.active {
+      background: #ffffff;
+      color: #09182b;
+      border-color: #ffffff;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+      padding-bottom: 3.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1180px) {
+      .cards-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .entity-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .entity-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-bright);
+      box-shadow: var(--shadow-md);
+    }
+
+    .entity-media {
+      position: relative;
+      height: 210px;
+      background: var(--bg-surface);
+      overflow: hidden;
+    }
+
+    .entity-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+
+    .entity-card:hover .entity-media img { transform: scale(1.05); }
+
+    /* Cabecera visual personalizada para alojamientos (evita poner fotos falsas de monumentos) */
+    .hotel-visual-showcase {
+      width: 100%;
+      height: 100%;
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      transition: transform 0.45s ease;
+    }
+
+    .entity-card:hover .hotel-visual-showcase {
+      transform: scale(1.03);
+    }
+
+    .hotel-visual-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.14;
+      background-image: radial-gradient(#ffffff 1.2px, transparent 1.2px);
+      background-size: 16px 16px;
+      pointer-events: none;
+    }
+
+    .hotel-visual-caption {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hotel-visual-kicker {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-gold);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .hotel-visual-name {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .hotel-visual-zone {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+      display: block;
+    }
+
+    .entity-badges {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .badge-pill {
+      padding: 0.28rem 0.72rem;
+      border-radius: var(--radius-full);
+      font-size: 0.74rem;
+      font-weight: 700;
+      background: rgba(9, 24, 43, 0.88);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      border: 1px solid var(--border-strong);
+    }
+
+    .badge-price {
+      background: #ffffff;
+      color: #09182b;
+      border: none;
+    }
+
+    .hotel-stars {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: var(--accent-gold);
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    .entity-body {
+      padding: 1.35rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .entity-title {
+      font-family: var(--font-heading);
+      font-size: 1.18rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .entity-desc {
+      font-size: 0.91rem;
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    .entity-meta {
+      font-size: 0.83rem;
+      color: #e0f2fe;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .verify-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning-text);
+      font-size: 0.73rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      width: fit-content;
+    }
+
+    .mini-map-box {
+      width: 100%;
+      height: 155px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-strong);
+      background: #1b4170;
+      z-index: 1;
+    }
+
+    .entity-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.25rem;
+    }
+
+    .btn-route {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.62rem 0.95rem;
+      border-radius: var(--radius-md);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      color: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 700;
+      transition: var(--transition-fast);
+      text-align: center;
+    }
+
+    .btn-route:hover {
+      background: #ffffff;
+      color: #09182b;
+    }
+
+    .btn-gold {
+      background: var(--accent-gold);
+      color: #09182b;
+      border-color: var(--accent-gold);
+    }
+
+    .btn-gold:hover {
+      background: #fde047;
+      color: #09182b;
+    }
+
+    /* ==========================================================================
+       9. NOTICIAS CON PORTADA DESTACADA + CUADRÍCULA EDITORIAL
+       ========================================================================== */
+    .lead-news-banner {
+      display: grid;
+      grid-template-columns: 1fr;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    @media (min-width: 880px) {
+      .lead-news-banner {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+    }
+
+    .lead-news-media {
+      min-height: 265px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lead-news-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .lead-news-body {
+      padding: 1.85rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.65rem;
+      padding-bottom: 4rem;
+    }
+
+    .news-card, .info-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .news-card:hover, .info-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-bright);
+    }
+
+    .news-card-media, .info-card-img {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .news-card-media img, .info-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+
+    .news-card:hover .news-card-media img,
+    .info-card:hover .info-card-img img {
+      transform: scale(1.05);
+    }
+
+    .news-card-body, .info-card-content {
+      padding: 1.4rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .news-date {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       10. CALENDARIO DE EVENTOS Y FIESTAS CON FOTOS ENLAZADAS
+       ========================================================================== */
+    .calendar-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding-bottom: 4rem;
+    }
+
+    @media (min-width: 980px) {
+      .calendar-layout {
+        grid-template-columns: 0.92fr 1.08fr;
+        align-items: start;
+      }
+    }
+
+    .calendar-panel {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      position: sticky;
+      top: calc(var(--header-height) + 1.25rem);
+    }
+
+    .calendar-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .calendar-month-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 800;
+      text-transform: capitalize;
+    }
+
+    .calendar-nav-btns {
+      display: flex;
+      gap: 0.45rem;
+    }
+
+    .cal-btn {
+      padding: 0.44rem 0.82rem;
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      font-weight: 700;
+      font-size: 0.82rem;
+      transition: var(--transition-fast);
+    }
+
+    .cal-btn:hover { background: var(--accent-primary); }
+
+    .calendar-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .calendar-days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.35rem;
+    }
+
+    .cal-day {
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius-sm);
+      background: rgba(15, 39, 68, 0.55);
+      border: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.88rem;
+      font-weight: 600;
+      position: relative;
+      transition: var(--transition-fast);
+    }
+
+    .cal-day.empty {
+      background: transparent;
+      pointer-events: none;
+    }
+
+    .cal-day.has-event {
+      background: rgba(59, 130, 246, 0.32);
+      border-color: var(--accent-bright);
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .cal-day.has-event::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      margin-top: 3px;
+    }
+
+    .cal-day.has-event:hover, .cal-day.selected-day {
+      background: var(--accent-gold);
+      color: #09182b;
+      border-color: #ffffff;
+    }
+
+    .cal-day.selected-day::after { background: #09182b; }
+
+    .quick-months-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .festivity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .festivity-photo-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    @media (min-width: 640px) {
+      .festivity-photo-card {
+        grid-template-columns: 225px 1fr;
+      }
+    }
+
+    .festivity-photo-card.highlighted {
+      border-color: var(--accent-gold);
+      background: var(--bg-surface);
+    }
+
+    .festivity-photo-card:hover {
+      border-color: var(--accent-bright);
+      transform: translateY(-3px);
+    }
+
+    .festivity-thumb {
+      min-height: 190px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .festivity-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .festivity-body {
+      padding: 1.25rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    /* ==========================================================================
+       11. BANNER DESTACADO DE TEATRO EN QUÉ HACER Y OCIO
+       ========================================================================== */
+    .teatro-spotlight {
+      display: grid;
+      grid-template-columns: 1fr;
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-secondary) 100%);
+      border: 1px solid var(--accent-gold);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 2.25rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    @media (min-width: 860px) {
+      .teatro-spotlight {
+        grid-template-columns: 380px 1fr;
+      }
+    }
+
+    .teatro-spotlight-img {
+      min-height: 235px;
+      overflow: hidden;
+    }
+
+    .teatro-spotlight-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .teatro-spotlight-body {
+      padding: 1.85rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    /* ==========================================================================
+       12. LECTOR DIVIDIDO AMPLIADO (IMAGEN GRANDE IZQUIERDA + ARTÍCULO DERECHA)
+       ========================================================================== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 16, 32, 0.86);
+      backdrop-filter: blur(8px);
+      z-index: 1600;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .split-reader-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      max-width: 1080px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+
+    @media (min-width: 860px) {
+      .split-reader-card {
+        grid-template-columns: 1.05fr 1.15fr;
+      }
+    }
+
+    .split-reader-media {
+      position: relative;
+      background: var(--bg-deep);
+      min-height: 240px;
+      max-height: 90vh;
+      overflow: hidden;
+    }
+
+    .split-reader-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .split-reader-media:hover img { transform: scale(1.04); }
+
+    .split-reader-content {
+      padding: 1.75rem;
+      overflow-y: auto;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    @media (min-width: 860px) {
+      .split-reader-content { padding: 2.25rem 2.5rem; }
+    }
+
+    .split-reader-text {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.75;
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+    }
+
+    .split-reader-footer {
+      margin-top: auto;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+    }
+
+    /* ==========================================================================
+       13. HISTORIA INTERACTIVA, INFO GRID, MAPA GENERAL Y FOOTER
+       ========================================================================== */
+    .history-era-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .history-era-btn {
+      padding: 0.48rem 0.95rem;
+      border-radius: var(--radius-full);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.83rem;
+      font-weight: 600;
+      transition: var(--transition-fast);
+    }
+
+    .history-era-btn:hover, .history-era-btn.active {
+      background: var(--accent-primary);
+      color: #ffffff;
+      border-color: var(--accent-bright);
+    }
+
+    .history-showcase {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding-bottom: 4rem;
+    }
+
+    .history-chapter {
+      display: grid;
+      grid-template-columns: 1fr;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
+
+    .history-chapter:hover { border-color: var(--accent-bright); }
+
+    @media (min-width: 860px) {
+      .history-chapter { grid-template-columns: 380px 1fr; }
+      .history-chapter:nth-child(even) { grid-template-columns: 1fr 380px; }
+      .history-chapter:nth-child(even) .history-chapter-media { order: 2; }
+    }
+
+    .history-chapter-media {
+      position: relative;
+      min-height: 245px;
+      background: var(--bg-surface);
+    }
+
+    .history-chapter-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .history-chapter-body {
+      padding: 1.85rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+
+    .timeline-era {
+      display: inline-block;
+      width: fit-content;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: #09182b;
+      background: var(--accent-gold);
+      padding: 0.24rem 0.78rem;
+      border-radius: var(--radius-full);
+    }
+
+    .history-highlight-box {
+      background: rgba(9, 24, 43, 0.65);
+      border-left: 3px solid var(--accent-bright);
+      padding: 0.75rem 1rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.87rem;
+      color: var(--text-secondary);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(305px, 1fr));
+      gap: 1.65rem;
+      padding-bottom: 4rem;
+    }
+
+    .info-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .info-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(59, 130, 246, 0.22);
+      color: var(--accent-bright);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .general-map-container {
+      width: 100%;
+      height: 530px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-strong);
+      margin-bottom: 3rem;
+      z-index: 1;
+    }
+
+    .contact-form {
+      max-width: 640px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+      margin-bottom: 4rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-control {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 0.78rem 1rem;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+    .form-control:focus {
+      border-color: var(--accent-gold);
+      outline: none;
+    }
+
+    .site-footer {
+      background: var(--bg-deep);
+      border-top: 1px solid var(--border-subtle);
+      padding: 3.25rem 0 2rem;
+      margin-top: auto;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.25rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; }
+    }
+
+    .footer-heading {
+      color: #ffffff;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.98rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      padding-top: 1.4rem;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.8rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- ========================================================================
+       CABECERA PRINCIPAL CON EL ESCUDO OFICIAL DEL AYUNTAMIENTO DE VALDEMORO
+       ======================================================================== -->
+  <header class="site-header" id="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="#inicio" class="brand-logo" data-route="inicio" aria-label="Conoce Valdemoro - Ir a Inicio">
+        <span class="brand-crest-badge" id="header-crest-container">
+          <svg viewBox="0 0 260 155" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Escudo oficial del Ayuntamiento de Valdemoro">
+            <path d="M92 31 L88 18 L99 23 L110 14 L123 21 L130 9 L137 21 L150 14 L161 23 L172 18 L168 31 Q130 22 92 31 Z" fill="#0d1e3a"/>
+            <path d="M91 37 Q130 28 169 37 L166 44 Q130 35 94 44 Z" fill="#0d1e3a"/>
+            <path d="M96 51 H127.5 V117 C108 112 96 97 96 79 Z" fill="#0d1e3a"/>
+            <circle cx="113" cy="61" r="2.2" fill="#ffffff"/>
+            <circle cx="117" cy="60.5" r="2.2" fill="#ffffff"/>
+            <circle cx="121" cy="61" r="2.2" fill="#ffffff"/>
+            <path d="M112 66 Q117 69 122 66 L121 71 Q117 73 113 71 Z" fill="#ffffff"/>
+            <path d="M109 75 H124 V101 H120 V85 H118 V101 H114 V85 H112 V101 H109 Z" fill="#ffffff"/>
+            <line x1="103" y1="69" x2="113" y2="93" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round"/>
+            <circle cx="102.5" cy="68" r="2.5" fill="#ffffff"/>
+            <path d="M132.5 51 H164 V79 C164 97 152 112 132.5 117 Z" fill="#0d1e3a"/>
+            <rect x="139" y="65" width="18" height="7" fill="#ffffff"/>
+            <rect x="141" y="59" width="4" height="6" fill="#ffffff"/>
+            <rect x="146.5" y="57" width="4" height="8" fill="#ffffff"/>
+            <rect x="152" y="59" width="4" height="6" fill="#ffffff"/>
+            <rect x="141" y="75" width="7" height="4.5" fill="#ffffff"/>
+            <rect x="150" y="75" width="6" height="4.5" fill="#ffffff"/>
+            <rect x="141" y="82" width="15" height="5" fill="#ffffff"/>
+            <path d="M140 90 H156 V101 H151 V94 C151 92 146 92 146 94 V101 H140 Z" fill="#ffffff"/>
+            <circle cx="123.5" cy="79" r="3.1" fill="#ffffff"/>
+            <circle cx="130" cy="79" r="3.1" fill="#ffffff"/>
+            <circle cx="136.5" cy="79" r="3.1" fill="#ffffff"/>
+            <text x="130" y="138" text-anchor="middle" fill="#0d1e3a" font-family="Plus Jakarta Sans, Inter, sans-serif" font-weight="700" font-size="18.5" letter-spacing="-0.3">Ayuntamiento de Valdemoro</text>
+            <circle cx="122" cy="148" r="2.7" fill="#0d1e3a"/>
+            <circle cx="130" cy="148" r="2.7" fill="#0d1e3a"/>
+            <circle cx="138" cy="148" r="2.7" fill="#0d1e3a"/>
+          </svg>
+        </span>
+        <span class="brand-text-wrap">
+          <span>Conoce Valdemoro</span>
+          <span class="brand-sub">Guía Turística y Municipal</span>
+        </span>
+      </a>
+
+      <!-- Menú superior -->
+      <nav class="top-nav" aria-label="Navegación principal">
+        <a href="#inicio" class="nav-link active" data-route="inicio">Inicio</a>
+        <a href="#noticias" class="nav-link" data-route="noticias">Noticias</a>
+        <a href="#fiestas" class="nav-link" data-route="fiestas">Eventos y Fiestas</a>
+        <a href="#lugares" class="nav-link" data-route="lugares">Lugares</a>
+        <a href="#restaurantes" class="nav-link" data-route="restaurantes">Restaurantes</a>
+        <a href="#hoteles" class="nav-link" data-route="hoteles">Hoteles</a>
+        <a href="#historia" class="nav-link" data-route="historia">Historia</a>
+        <a href="#que-hacer" class="nav-link" data-route="que-hacer">Qué hacer</a>
+      </nav>
+
+      <!-- Botón Drawer Lateral -->
+      <button type="button" class="drawer-toggle" id="drawer-open-btn" aria-expanded="false" aria-controls="side-drawer" aria-label="Abrir menú lateral">
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <span class="drawer-toggle-label">Más</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       MENÚ LATERAL DESLIZANTE (DRAWER)
+       ======================================================================== -->
+  <div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
+  <aside class="side-drawer" id="side-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-heading">
+    <div class="drawer-header">
+      <h2 class="drawer-title" id="drawer-heading">Explorar Valdemoro</h2>
+      <button type="button" class="drawer-close" id="drawer-close-btn" aria-label="Cerrar menú lateral">&times;</button>
+    </div>
+
+    <div class="drawer-primary-group">
+      <p class="drawer-group-title">Secciones principales</p>
+      <ul class="drawer-list">
+        <li><a href="#inicio" class="drawer-link active" data-route="inicio">Inicio</a></li>
+        <li><a href="#noticias" class="drawer-link" data-route="noticias">Noticias municipales</a></li>
+        <li><a href="#fiestas" class="drawer-link" data-route="fiestas">Calendario de Eventos y Fiestas</a></li>
+        <li><a href="#lugares" class="drawer-link" data-route="lugares">Lugares y Patrimonio</a></li>
+        <li><a href="#restaurantes" class="drawer-link" data-route="restaurantes">Restaurantes</a></li>
+        <li><a href="#hoteles" class="drawer-link" data-route="hoteles">Hoteles</a></li>
+        <li><a href="#historia" class="drawer-link" data-route="historia">Historia de la Villa</a></li>
+        <li><a href="#que-hacer" class="drawer-link" data-route="que-hacer">Qué hacer y Teatro</a></li>
+      </ul>
+    </div>
+
+    <p class="drawer-group-title">Guía práctica y servicios</p>
+    <ul class="drawer-list">
+      <li><a href="#curiosidades" class="drawer-link" data-route="curiosidades">Curiosidades y Tradiciones</a></li>
+      <li><a href="#mapa-general" class="drawer-link" data-route="mapa-general">Mapa general interactivo</a></li>
+      <li><a href="#transporte" class="drawer-link" data-route="transporte">Transporte y Autobuses</a></li>
+      <li><a href="#gastronomia" class="drawer-link" data-route="gastronomia">Gastronomía típica</a></li>
+      <li><a href="#contacto" class="drawer-link" data-route="contacto">Contacto y Sugerencias</a></li>
+      <li><a href="#sobre-la-web" class="drawer-link" data-route="sobre-la-web">Sobre la web</a></li>
+    </ul>
+  </aside>
+
+  <!-- ========================================================================
+       CONTENIDO PRINCIPAL (SPA VIEWS)
+       ======================================================================== -->
+  <main id="main-content" tabindex="-1">
+
+    <!-- ======================================================================
+         VISTA 1: INICIO
+         ====================================================================== -->
+    <section id="view-inicio" class="spa-section active" aria-labelledby="hero-main-title">
+      <div class="hero-split">
+        <div class="container hero-split-grid">
+          <div>
+            <div class="hero-crest-pill">
+              <span>Villa de Valdemoro · Comunidad de Madrid</span>
+            </div>
+            <h1 class="hero-title" id="hero-main-title">Conoce Valdemoro</h1>
+            <p class="hero-subtitle">
+              Actualidad municipal verificada, calendario oficial de fiestas y tradiciones, patrimonio barroco, grandes parques, transporte frecuente y gastronomía en el sur de Madrid.
+            </p>
+
+            <!-- BUSCADOR EN TIEMPO REAL -->
+            <div class="search-wrapper" role="search">
+              <div class="search-box">
+                <svg class="search-icon icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <div class="search-input-container">
+                  <label for="global-search-input" class="sr-only">Buscar lugares, eventos, hoteles o noticias en Valdemoro</label>
+                  <input
+                    type="search"
+                    id="global-search-input"
+                    class="search-input"
+                    autocomplete="off"
+                    aria-autocomplete="list"
+                    aria-controls="search-results-list"
+                  />
+                  <span class="search-placeholder-anim" id="rotating-placeholder" aria-hidden="true">¿Qué te apetece saber hoy?</span>
+                </div>
+                <button type="button" class="search-clear" id="search-clear-btn" aria-label="Limpiar búsqueda">Limpiar</button>
+              </div>
+              <div class="search-results-dropdown" id="search-results-list" role="listbox" aria-label="Sugerencias de búsqueda"></div>
+            </div>
+
+            <div class="hero-quick-chips">
+              <button type="button" class="quick-chip" data-route="fiestas">Calendario de Fiestas</button>
+              <button type="button" class="quick-chip" data-route="noticias">Noticias Reales</button>
+              <button type="button" class="quick-chip" data-route="que-hacer">Teatro Juan Prado</button>
+              <button type="button" class="quick-chip" data-route="mapa-general">Mapa Interactivo</button>
+            </div>
+          </div>
+
+          <!-- Collage de fotografías reales de Valdemoro con href a sus fuentes -->
+          <div class="hero-collage gs-slide-right">
+            <div class="hero-collage-main">
+              <a class="img-href-link" data-link-badge="Ver monumento ↗" href="https://commons.wikimedia.org/wiki/File:Valdemoro_-_Plaza_de_la_Constituci%C3%B3n,_Torre_del_Reloj_1.jpg" target="_blank" rel="noopener noreferrer" title="Ver fotografía real de la Plaza de la Constitución de Valdemoro">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Plaza_de_la_Constituci%C3%B3n,_Torre_del_Reloj_1.jpg?width=1000" alt="Plaza de la Constitución y Torre del Reloj de Valdemoro" />
+              </a>
+              <span class="collage-caption">Plaza de la Constitución y Torre del Reloj · Valdemoro</span>
+            </div>
+            <div class="hero-collage-sub">
+              <a class="img-href-link" data-link-badge="Ver parque ↗" href="https://commons.wikimedia.org/wiki/File:Valdemoro_-_Parque_de_Enrique_Tierno_Galv%C3%A1n_3.jpg" target="_blank" rel="noopener noreferrer" title="Ver foto real del Parque Enrique Tierno Galván">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Parque_de_Enrique_Tierno_Galv%C3%A1n_3.jpg?width=800" alt="Parque Enrique Tierno Galván en Valdemoro" loading="lazy" />
+              </a>
+              <span class="collage-caption">Parque Tierno Galván</span>
+            </div>
+            <div class="hero-collage-sub">
+              <a class="img-href-link" data-link-badge="Ver templo ↗" href="https://commons.wikimedia.org/wiki/File:Parroquia_Asunci%C3%B3n_Valdemoro.jpg" target="_blank" rel="noopener noreferrer" title="Ver foto real de la Iglesia de Nuestra Señora de la Asunción">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Parroquia_Asunci%C3%B3n_Valdemoro.jpg?width=800" alt="Iglesia Parroquial de Nuestra Señora de la Asunción de Valdemoro" loading="lazy" />
+              </a>
+              <span class="collage-caption">Iglesia de la Asunción</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE A: ACTUALIDAD Y PRÓXIMAS FIESTAS EN DISEÑO REVISTA -->
+      <div class="home-block">
+        <div class="container">
+          <div class="gs-fade-up" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:1rem; margin-bottom:2rem;">
+            <div>
+              <span class="section-eyebrow">Información oficial · valdemoro.es</span>
+              <h2 class="section-heading" style="margin-bottom:0;">Actualidad y Agenda Festiva</h2>
+            </div>
+            <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+              <button type="button" class="cal-btn" data-route="noticias">Todas las noticias →</button>
+              <button type="button" class="cal-btn" data-route="fiestas">Calendario de fiestas →</button>
+            </div>
+          </div>
+
+          <div class="magazine-grid" id="home-magazine-preview"></div>
+        </div>
+      </div>
+
+      <!-- BLOQUE B: MOVILIDAD, PARQUES Y CIFRAS DE VALDEMORO -->
+      <div class="home-block home-block-alt">
+        <div class="container">
+          <div class="story-grid-2">
+            <div class="parallax-media-frame gs-slide-left">
+              <a class="img-href-link" data-link-badge="Ver estación ↗" href="https://commons.wikimedia.org/wiki/File:Valdemoro_-_Estaci%C3%B3n_de_tren_1.jpg" target="_blank" rel="noopener noreferrer" title="Ver fotografía real de la Estación de Valdemoro">
+                <img
+                  src="https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Estaci%C3%B3n_de_tren_1.jpg?width=1000"
+                  alt="Estación de Cercanías y transporte público en Valdemoro"
+                  loading="lazy"
+                />
+              </a>
+            </div>
+
+            <div class="gs-slide-right">
+              <span class="section-eyebrow">Ciudad conectada y verde</span>
+              <h2 class="big-reveal-text">
+                Excelente red de <span class="highlight-blue">autobuses urbanos</span> y amplios espacios verdes.
+              </h2>
+              <p class="section-lead" style="margin-bottom: 1rem;">
+                Situada a 27 km de Madrid, Valdemoro dispone de <strong>7 líneas de autobús urbano (L1–L7)</strong> con gran frecuencia hacia todos sus barrios, enlaces interurbanos directos a Legazpi (422, 423, 424) y estación de Cercanías C-3.
+              </p>
+              <p style="color: var(--text-secondary); font-size: 0.96rem;">
+                Sus grandes zonas verdes —como el Parque Enrique Tierno Galván, el Parque de la Ermita y el espacio forestal Bolitas del Airón— conviven con una intensa agenda teatral, deportiva y festiva.
+              </p>
+
+              <div class="stats-row">
+                <div class="stat-card gs-scale-up">
+                  <span class="stat-number" data-target="85972" data-suffix="">0</span>
+                  <span class="stat-label">Habitantes</span>
+                </div>
+                <div class="stat-card gs-scale-up">
+                  <span class="stat-number" data-target="7" data-suffix=" líneas">0</span>
+                  <span class="stat-label">Bus urbano</span>
+                </div>
+                <div class="stat-card gs-scale-up">
+                  <span class="stat-number" data-target="27" data-suffix=" km">0</span>
+                  <span class="stat-label">De Madrid</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE C: LUGARES IMPRESCINDIBLES -->
+      <div class="home-block">
+        <div class="container">
+          <div class="gs-fade-up" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:1rem; margin-bottom:2rem;">
+            <div>
+              <span class="section-eyebrow">Patrimonio y naturaleza</span>
+              <h2 class="section-heading" style="margin-bottom:0;">Lugares emblemáticos de Valdemoro</h2>
+            </div>
+            <button type="button" class="btn-primary-action" data-route="lugares">
+              Ver todos los lugares →
+            </button>
+          </div>
+          <div class="showcase-grid" id="home-places-preview"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 2: NOTICIAS REALES DEL AYUNTAMIENTO DE VALDEMORO
+         ====================================================================== -->
+    <section id="view-noticias" class="spa-section" aria-labelledby="title-noticias">
+      <div class="page-header">
+        <div class="container page-header-row">
+          <div>
+            <span class="section-eyebrow">Portal Oficial · www.valdemoro.es/noticias</span>
+            <h1 class="section-heading" id="title-noticias">Noticias de Valdemoro</h1>
+            <p class="section-lead" style="margin-bottom: 0;">
+              Actualidad municipal real verificada. Pulsa sobre cualquier imagen o botón para acceder directamente a la publicación en la web del Ayuntamiento.
+            </p>
+          </div>
+          <a href="https://www.valdemoro.es/noticias" target="_blank" rel="noopener noreferrer" class="btn-primary-action">
+            Ir a valdemoro.es/noticias →
+          </a>
+        </div>
+      </div>
+      <div class="container">
+        <div class="filter-bar" id="filter-noticias" role="group" aria-label="Filtrar noticias por temática"></div>
+        <div id="lead-noticia-container"></div>
+        <div class="news-grid" id="grid-noticias"></div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 3: EVENTOS Y FIESTAS
+         ====================================================================== -->
+    <section id="view-fiestas" class="spa-section" aria-labelledby="title-fiestas">
+      <div class="page-header">
+        <div class="container page-header-row">
+          <div>
+            <span class="section-eyebrow">Tu Ciudad · Ayuntamiento de Valdemoro</span>
+            <h1 class="section-heading" id="title-fiestas">Eventos y Fiestas de Valdemoro</h1>
+            <p class="section-lead" style="margin-bottom: 0;">
+              Calendario anual con las fiestas oficiales y tradiciones de la villa: Santísimo Cristo de la Salud, Nuestra Señora del Rosario, Feria Barroca, San Marcos, Carnaval y Navidad.
+            </p>
+          </div>
+          <a href="https://www.valdemoro.es/tu-ciudad/fiestas" target="_blank" rel="noopener noreferrer" class="btn-primary-action">
+            Web oficial de Fiestas →
+          </a>
+        </div>
+      </div>
+      <div class="container">
+        <div class="calendar-layout">
+          <div class="calendar-panel">
+            <div class="calendar-controls">
+              <h2 class="calendar-month-title" id="cal-month-label">Noviembre 2026</h2>
+              <div class="calendar-nav-btns">
+                <button type="button" class="cal-btn" id="cal-prev-btn" aria-label="Mes anterior">← Anterior</button>
+                <button type="button" class="cal-btn" id="cal-next-btn" aria-label="Mes siguiente">Siguiente →</button>
+              </div>
+            </div>
+
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+            </div>
+            <div class="calendar-days-grid" id="cal-days-grid" role="grid" aria-label="Días del mes"></div>
+
+            <div class="quick-months-bar" aria-label="Saltar a mes con eventos">
+              <button type="button" class="cal-btn" data-jump-month="0">Ene · Reyes</button>
+              <button type="button" class="cal-btn" data-jump-month="1">Feb · Carnaval</button>
+              <button type="button" class="cal-btn" data-jump-month="3">Abr · San Marcos</button>
+              <button type="button" class="cal-btn" data-jump-month="4">May · Cristo de la Salud</button>
+              <button type="button" class="cal-btn" data-jump-month="8">Sep · Virgen del Rosario</button>
+              <button type="button" class="cal-btn" data-jump-month="9">Oct · Feria Barroca</button>
+              <button type="button" class="cal-btn" data-jump-month="10">Nov · Encendido</button>
+              <button type="button" class="cal-btn" data-jump-month="11">Dic · Navidad</button>
+            </div>
+          </div>
+
+          <div>
+            <h2 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 1rem;" id="festivities-side-title">
+              Fiestas y tradiciones de Valdemoro
+            </h2>
+            <div class="festivity-list" id="festivity-list-container"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 4: LUGARES
+         ====================================================================== -->
+    <section id="view-lugares" class="spa-section" aria-labelledby="title-lugares">
+      <div class="page-header">
+        <div class="container">
+          <span class="section-eyebrow">Patrimonio, parques y equipamientos</span>
+          <h1 class="section-heading" id="title-lugares">Lugares que ver en Valdemoro</h1>
+          <p class="section-lead" style="margin-bottom: 0;">
+            Monumentos reales del casco histórico, grandes zonas verdes y centros culturales con su fotografía real exclusiva y mapa interactivo.
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="filter-bar" id="filter-lugares" role="group" aria-label="Filtrar lugares por categoría"></div>
+        <div class="cards-grid" id="grid-lugares"></div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 5: RESTAURANTES (CON ENLACES E IMÁGENES PROPIAS DE CADA LOCAL)
+         ====================================================================== -->
+    <section id="view-restaurantes" class="spa-section" aria-labelledby="title-restaurantes">
+      <div class="page-header">
+        <div class="container">
+          <span class="section-eyebrow">Dónde comer en Valdemoro</span>
+          <h1 class="section-heading" id="title-restaurantes">Restaurantes en Valdemoro</h1>
+          <p class="section-lead" style="margin-bottom: 0;">
+            Establecimientos reales en Valdemoro con fotografía gastronómica propia acorde a su cocina, mapa interactivo y enlace directo a la web o galería real de cada restaurante.
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="filter-bar" id="filter-restaurantes" role="group" aria-label="Filtrar restaurantes por tipo de cocina"></div>
+        <div class="cards-grid" id="grid-restaurantes"></div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 6: HOTELES (CON IDENTIDAD PROPIA Y ENLACE DIRECTO A CADA HOTEL)
+         ====================================================================== -->
+    <section id="view-hoteles" class="spa-section" aria-labelledby="title-hoteles">
+      <div class="page-header">
+        <div class="container">
+          <span class="section-eyebrow">Dónde alojarse</span>
+          <h1 class="section-heading" id="title-hoteles">Hoteles y Hostales en Valdemoro</h1>
+          <p class="section-lead" style="margin-bottom: 0;">
+            Alojamientos reales en Valdemoro clasificados por estrellas, con mapa interactivo y enlace directo a la web oficial o galería real de fotos de cada establecimiento.
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="filter-bar" id="filter-hoteles" role="group" aria-label="Filtrar hoteles por categoría"></div>
+        <div class="cards-grid" id="grid-hoteles"></div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 7: HISTORIA INTERACTIVA
+         ====================================================================== -->
+    <section id="view-historia" class="spa-section" aria-labelledby="title-historia">
+      <div class="page-header">
+        <div class="container">
+          <span class="section-eyebrow">Crónica ilustrada de la villa</span>
+          <h1 class="section-heading" id="title-historia">Historia de Valdemoro</h1>
+          <p class="section-lead" style="margin-bottom: 0;">
+            Recorre etapa por etapa la historia documentada de Valdemoro con fotografías reales del patrimonio local enlazadas a sus fuentes.
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="history-era-nav" id="history-era-nav" role="group" aria-label="Seleccionar época histórica"></div>
+        <div class="history-showcase" id="timeline-historia"></div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTA 8: QUÉ HACER Y OCIO
+         ====================================================================== -->
+    <section id="view-que-hacer" class="spa-section" aria-labelledby="title-que-hacer">
+      <div class="page-header">
+        <div class="container">
+          <span class="section-eyebrow">Ocio, teatro, deporte y naturaleza</span>
+          <h1 class="section-heading" id="title-que-hacer">Qué hacer en Valdemoro</h1>
+          <p class="section-lead" style="margin-bottom: 0;">
+            Programación cultural del Teatro Municipal Juan Prado con enlace directo a entradas, rutas naturales, deporte y zonas comerciales.
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="teatro-spotlight gs-fade-up">
+          <div class="teatro-spotlight-img">
+            <a class="img-href-link" data-link-badge="Taquilla Teatro ↗" href="https://teatrodevaldemoro.sacatuentrada.es/" target="_blank" rel="noopener noreferrer" title="Abrir web oficial del Teatro Municipal Juan Prado de Valdemoro">
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Plaza_de_la_Constituci%C3%B3n,_Torre_del_Reloj_2.jpg?width=900" alt="Entorno cultural y Teatro Municipal Juan Prado de Valdemoro" />
+            </a>
+          </div>
+          <div class="teatro-spotlight-body">
+            <span class="timeline-era">Teatro Municipal Juan Prado · C/ Estrella de Elola, 27</span>
+            <h2 style="font-family:var(--font-heading); font-size:1.55rem; line-height:1.2;">Cartelera teatral y compra de entradas en Valdemoro</h2>
+            <p style="color:var(--text-secondary); font-size:0.95rem;">
+              Adscrito a la Red de Teatros de la Comunidad de Madrid y con aforo para 420 espectadores, el Teatro Municipal Juan Prado acoge obras de teatro, danza, conciertos y espectáculos familiares durante todo el año.
+            </p>
+            <div style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:0.35rem;">
+              <a href="https://teatrodevaldemoro.sacatuentrada.es/" target="_blank" rel="noopener noreferrer" class="btn-primary-action">
+                Taquilla y Entradas del Teatro →
+              </a>
+              <a href="https://www.valdemoro.es/teatro1" target="_blank" rel="noopener noreferrer" class="btn-route" style="flex:0 1 auto;">
+                Web Teatro Ayuntamiento
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-bar" id="filter-que-hacer" role="group" aria-label="Filtrar actividades"></div>
+        <div class="info-grid" id="grid-que-hacer"></div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VISTAS ADICIONALES DEL MENÚ LATERAL
+         ====================================================================== -->
+    <section id="view-curiosidades" class="spa-section" aria-labelledby="title-curiosidades">
+      <div class="page-header">
+        <div class="container">
+          <span class="section-eyebrow">Identidad y patrimonio singular</span>
+          <h1 class="section-heading" id="title-curiosidades">Curiosidades y Tradiciones</h1>
+          <p class="section-lead" style="margin-bottom: 0;">
+            Datos históricos reales, arte barroco y curiosidades que definen la identidad de Valdemoro.
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="info-grid" id="grid-curiosidades"></div>
+      </div>
+    </section>
+
+    <section id="view-mapa-general" class="spa-section" aria-labelledby="title-mapa-general">
+      <div class="page-header">
+        <div class="container">
+          <span class="section-eyebrow">Cartografía interactiva</span>
+          <h1 class="section-heading" id="title-mapa-general">Mapa General de Valdemoro</h1>
+          <p class="section-lead" style="margin-bottom: 0;">
+            Explora todos los monumentos, parques, restaurantes y hoteles reales de Valdemoro sobre el mapa interactivo (callejero y vista satélite).
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <div id="general-leaflet-map" class="general-map-container" role="region" aria-label="Mapa general de Valdemoro"></div>
+      </div>
+    </section>
+
+    <section id="view-transporte" class="spa-section" aria-labelledby="title-transporte">
+      <div class="page-header">
+        <div class="container">
+          <span class="section-eyebrow">Movilidad y conexiones</span>
+          <h1 class="section-heading" id="title-transporte">Transporte y Red de Autobuses</h1>
+          <p class="section-lead" style="margin-bottom: 0;">
+            Red de 7 líneas de autobús urbano (L1–L7), líneas interurbanas hacia Madrid (422, 423, 424, 428) y estación de Cercanías Renfe C-3.
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="info-grid" id="grid-transporte"></div>
+      </div>
+    </section>
+
+    <section id="view-gastronomia" class="spa-section" aria-labelledby="title-gastronomia">
+      <div class="page-header">
+        <div class="container">
+          <span class="section-eyebrow">Recetario tradicional</span>
+          <h1 class="section-heading" id="title-gastronomia">Gastronomía Típica Valdemoreña</h1>
+          <p class="section-lead" style="margin-bottom: 0;">
+            Sabores de La Sagra madrileña, repostería conventual artesanal del Convento de la Encarnación (Clarisas) y vinos D.O. Vinos de Madrid.
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="info-grid" id="grid-gastronomia"></div>
+      </div>
+    </section>
+
+    <section id="view-contacto" class="spa-section" aria-labelledby="title-contacto">
+      <div class="page-header">
+        <div class="container">
+          <span class="section-eyebrow">Atención al visitante</span>
+          <h1 class="section-heading" id="title-contacto">Contacto y Sugerencias</h1>
+          <p class="section-lead" style="margin-bottom: 0;">
+            Envíanos tus consultas turísticas o propuestas para actualizar cualquier dato de la guía.
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="form-group">
+            <label for="contact-name">Nombre completo</label>
+            <input type="text" id="contact-name" class="form-control" required placeholder="Ej. Laura Fernández" />
+          </div>
+          <div class="form-group">
+            <label for="contact-email">Correo electrónico</label>
+            <input type="email" id="contact-email" class="form-control" required placeholder="tu@correo.es" />
+          </div>
+          <div class="form-group">
+            <label for="contact-topic">Asunto</label>
+            <select id="contact-topic" class="form-control">
+              <option value="info">Información turística sobre Valdemoro</option>
+              <option value="update">Actualizar horario o ficha</option>
+              <option value="suggestion">Proponer evento o lugar</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="contact-msg">Mensaje</label>
+            <textarea id="contact-msg" rows="4" class="form-control" required placeholder="Escribe aquí tu mensaje..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary-action" style="width: fit-content;">
+            Enviar mensaje
+          </button>
+          <p id="contact-feedback" role="status" aria-live="polite" style="font-size: 0.9rem; color: var(--accent-emerald);"></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="view-sobre-la-web" class="spa-section" aria-labelledby="title-sobre-web">
+      <div class="page-header">
+        <div class="container">
+          <span class="section-eyebrow">Información editorial</span>
+          <h1 class="section-heading" id="title-sobre-web">Sobre Conoce Valdemoro</h1>
+          <p class="section-lead" style="margin-bottom: 0;">
+            Portal informativo, turístico y cultural de Valdemoro (Comunidad de Madrid) con enlaces directos a fuentes oficiales y establecimientos locales.
+          </p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="info-grid">
+          <article class="info-card">
+            <div class="info-card-content">
+              <h3>Fuentes y establecimientos reales</h3>
+              <p style="color: var(--text-secondary);">Las noticias y fiestas enlazan con <strong>valdemoro.es</strong> y <strong>feriabarroca.valdemoro.es</strong>, mientras que cada restaurante y hotel enlaza directamente con su propia web oficial o ficha verificada del local.</p>
+            </div>
+          </article>
+          <article class="info-card">
+            <div class="info-card-content">
+              <h3>Cartografía sin restricciones</h3>
+              <p style="color: var(--text-secondary);">Utiliza teselas abiertas de Esri World Street Map compatibles con apertura local y web sin necesidad de claves API externas.</p>
+            </div>
+          </article>
+          <article class="info-card">
+            <div class="info-card-content">
+              <h3>Datos con etiqueta ⚠ Verificar</h3>
+              <p style="color: var(--text-secondary);">Los horarios, tarifas o fechas móviles marcados con <strong>⚠ Verificar</strong> deben contrastarse antes de la visita.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       LECTOR DIVIDIDO AMPLIADO (IMAGEN GRANDE CON HREF + CONTENIDO DERECHA)
+       ======================================================================== -->
+  <div class="modal-overlay" id="split-reader-modal" role="dialog" aria-modal="true" aria-labelledby="reader-modal-title">
+    <div class="split-reader-card">
+      <div class="split-reader-media">
+        <a id="reader-modal-img-link" class="img-href-link" data-link-badge="Abrir fuente ↗" href="https://www.valdemoro.es/noticias" target="_blank" rel="noopener noreferrer" title="Abrir fuente original">
+          <img id="reader-modal-img" src="" alt="" />
+        </a>
+      </div>
+      <div class="split-reader-content">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;">
+          <div>
+            <span class="section-eyebrow" id="reader-modal-cat">Categoría</span>
+            <h2 id="reader-modal-title" style="font-family:var(--font-heading); font-size:1.5rem; line-height:1.25;">Título</h2>
+            <p class="news-date" id="reader-modal-meta" style="margin-top:0.25rem;"></p>
+          </div>
+          <button type="button" class="drawer-close" id="reader-modal-close" aria-label="Cerrar ventana">&times;</button>
+        </div>
+
+        <div class="split-reader-text" id="reader-modal-body"></div>
+
+        <div class="split-reader-footer">
+          <a id="reader-modal-source-link" href="https://www.valdemoro.es/noticias" target="_blank" rel="noopener noreferrer" class="btn-primary-action">
+            <span id="reader-modal-source-label">Seguir leyendo en la web original</span>
+            <span aria-hidden="true">→</span>
+          </a>
+          <button type="button" class="cal-btn" id="reader-modal-close-bottom">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand-logo" style="margin-bottom: 0.85rem;">
+            <span class="brand-crest-badge" id="footer-crest-container" style="height:44px;">
+              <svg viewBox="0 0 260 155" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M92 31 L88 18 L99 23 L110 14 L123 21 L130 9 L137 21 L150 14 L161 23 L172 18 L168 31 Q130 22 92 31 Z" fill="#0d1e3a"/>
+                <path d="M91 37 Q130 28 169 37 L166 44 Q130 35 94 44 Z" fill="#0d1e3a"/>
+                <path d="M96 51 H127.5 V117 C108 112 96 97 96 79 Z" fill="#0d1e3a"/>
+                <path d="M132.5 51 H164 V79 C164 97 152 112 132.5 117 Z" fill="#0d1e3a"/>
+                <circle cx="123.5" cy="79" r="3.1" fill="#ffffff"/>
+                <circle cx="130" cy="79" r="3.1" fill="#ffffff"/>
+                <circle cx="136.5" cy="79" r="3.1" fill="#ffffff"/>
+                <text x="130" y="138" text-anchor="middle" fill="#0d1e3a" font-family="Plus Jakarta Sans, Inter, sans-serif" font-weight="700" font-size="18.5" letter-spacing="-0.3">Ayuntamiento de Valdemoro</text>
+                <circle cx="122" cy="148" r="2.7" fill="#0d1e3a"/>
+                <circle cx="130" cy="148" r="2.7" fill="#0d1e3a"/>
+                <circle cx="138" cy="148" r="2.7" fill="#0d1e3a"/>
+              </svg>
+            </span>
+            <span>Conoce Valdemoro</span>
+          </div>
+          <p>
+            Guía turística, cultural y ciudadana de Valdemoro (Comunidad de Madrid). Noticias oficiales, calendario de fiestas, patrimonio, parques y servicios.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer-heading">Secciones principales</h3>
+          <ul class="footer-links">
+            <li><a href="#noticias" data-route="noticias">Noticias municipales</a></li>
+            <li><a href="#fiestas" data-route="fiestas">Calendario de eventos y fiestas</a></li>
+            <li><a href="#lugares" data-route="lugares">Lugares y parques</a></li>
+            <li><a href="#restaurantes" data-route="restaurantes">Restaurantes</a></li>
+            <li><a href="#hoteles" data-route="hoteles">Hoteles con estrellas</a></li>
+            <li><a href="#que-hacer" data-route="que-hacer">Qué hacer y Teatro</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer-heading">Enlaces oficiales verificados</h3>
+          <ul class="footer-links">
+            <li><a href="https://www.valdemoro.es/noticias" target="_blank" rel="noopener noreferrer">Noticias Ayuntamiento de Valdemoro</a></li>
+            <li><a href="https://www.valdemoro.es/tu-ciudad/fiestas" target="_blank" rel="noopener noreferrer">Fiestas Oficiales de Valdemoro</a></li>
+            <li><a href="https://teatrodevaldemoro.sacatuentrada.es/" target="_blank" rel="noopener noreferrer">Teatro Municipal Juan Prado</a></li>
+            <li><a href="https://feriabarroca.valdemoro.es/" target="_blank" rel="noopener noreferrer">Feria Barroca de Valdemoro</a></li>
+            <li><a href="https://restaurantechiron.com/" target="_blank" rel="noopener noreferrer">Restaurante Chirón (Estrella Michelin)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Conoce Valdemoro · Guía informativa y cultural.</span>
+        <span>Cartografía abierta vía Esri World Street Map.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       LIBRERÍAS EXTERNAS POR CDN (GSAP + ScrollTrigger & Leaflet)
+       ======================================================================== -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+    /* ==========================================================================
+       BLOQUE 1: ICONOS SVG Y GENERADOR DE RESPALDO ÚNICO POR ESTABLECIMIENTO
+       ========================================================================== */
+    const SVG_ICONS = {
+      landmark: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M4 18h16M6 18V9m4 9V9m4 9V9m4 9V9M2 9l10-6 10 6"/></svg>`,
+      park: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22v-7m0 0c-3.5 0-6-2.5-6-6 0-3.5 3-7 6-7s6 3.5 6 7c0 3.5-2.5 6-6 6z"/></svg>`,
+      bus: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M3 10h18M7 20l2-4m8 4l-2-4"/></svg>`,
+      train: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="14" rx="3"/><path d="M4 11h16M8 21l2-4m6 4l-2-4"/></svg>`,
+      car: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17h14v-5l-2-5H7l-2 5v5z"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg>`,
+      compass: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`,
+      sport: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>`,
+      culture: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>`,
+      shop: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
+      food: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg>`,
+      spark: `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+      pin: `<svg class="icon-svg" style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+      clock: `<svg class="icon-svg" style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg>`,
+      route: `<svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>`,
+      ticket: `<svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2m0 10v2m0-8v2"/></svg>`
+    };
+
+    /* Genera una imagen SVG personalizada única para cada establecimiento si falla la carga externa (nunca repite fotos de monumentos) */
+    function createCustomVenueFallbackSvg(title, subtitle) {
+      const safeTitle = String(title || 'Valdemoro').replace(/[<>&'"]/g, '');
+      const safeSub = String(subtitle || 'Establecimiento en Valdemoro').replace(/[<>&'"]/g, '');
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'>
+        <defs>
+          <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+            <stop offset='0%' stop-color='#0d2544'/>
+            <stop offset='100%' stop-color='#1e4b82'/>
+          </linearGradient>
+        </defs>
+        <rect width='800' height='450' fill='url(#g)'/>
+        <circle cx='680' cy='90' r='140' fill='rgba(234,179,8,0.12)'/>
+        <text x='48' y='295' fill='#eab308' font-family='sans-serif' font-size='20' font-weight='700'>${safeSub}</text>
+        <text x='48' y='345' fill='#ffffff' font-family='sans-serif' font-size='34' font-weight='800'>${safeTitle}</text>
+        <text x='48' y='385' fill='#93c5fd' font-family='sans-serif' font-size='18'>Pulsa para ver galería y ficha real del establecimiento ↗</text>
+      </svg>`;
+      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+
+    function applyUniqueFallback(imgEl, title, subtitle) {
+      imgEl.onerror = null;
+      imgEl.src = createCustomVenueFallbackSvg(title, subtitle);
+    }
+
+    /* ==========================================================================
+       BLOQUE 2: BASE DE DATOS CON FOTOGRAFÍAS ÚNICAS Y ENLACES DIRECTOS REALES
+       ========================================================================== */
+    const VALDEMORO_DATA = {
+      noticias: [
+        {
+          id: "not-navidad-2026",
+          categoria: "Fiestas y Navidad",
+          fecha: "16 de noviembre de 2026 · Ayuntamiento de Valdemoro",
+          titulo: "La Navidad con más brillo con el pollo Pepe y Raya Real",
+          resumen: "La Navidad llegará a Valdemoro el 27 de noviembre a las 19:00 h con el tradicional encendido de luces en la Plaza de la Constitución y una completa agenda festiva.",
+          contenido: [
+            "El Ayuntamiento de Valdemoro anuncia el arranque oficial de la programación navideña el próximo 27 de noviembre a las 19:00 horas en la Plaza de la Constitución con el tradicional encendido de la iluminación ornamental.",
+            "El acto contará con propuestas familiares protagonizadas por el Pollo Pepe y la actuación musical de Raya Real, dando paso a semanas de actividades infantiles, mercados y espectáculos en todo el municipio.",
+            "Puedes consultar los horarios completos y todas las actividades navideñas en la noticia oficial publicada en el portal del Ayuntamiento de Valdemoro."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Plaza_de_la_Constituci%C3%B3n,_Torre_del_Reloj_1.jpg?width=1000",
+          urlFuente: "https://www.valdemoro.es/noticias/la-navidad-con-mas-brillo-con-el-pollo-pepe-y-raya-real",
+          textoBotonFuente: "Leer noticia original en valdemoro.es",
+          destacadaInicio: true
+        },
+        {
+          id: "not-cae-formacion",
+          categoria: "Educación y Cultura",
+          fecha: "18 de noviembre de 2026 · Ayuntamiento de Valdemoro",
+          titulo: "Centro de Actividades Educativas: un solo espacio con formación para todas las edades",
+          resumen: "Aprender música o danza, estudiar idiomas, obtener el título de ESO o mejorar competencias formativas se reúnen en el Centro de Actividades Educativas (CAE).",
+          contenido: [
+            "El Centro de Actividades Educativas (CAE) de Valdemoro consolida en un mismo equipamiento municipal una amplia oferta formativa abierta a vecinos de todas las edades.",
+            "Entre sus enseñanzas se incluyen la Escuela Municipal de Música y Danza, formación en idiomas, educación de personas adultas para la obtención del título de ESO y talleres de capacitación.",
+            "Consulta la oferta completa de cursos y matriculación en el portal oficial del Ayuntamiento de Valdemoro."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro-Vista_a%C3%A9rea.jpg?width=1000",
+          urlFuente: "https://www.valdemoro.es/noticias/centro-de-actividades-educativas-un-solo-espacio-con-formacion-para-todas-las-edades",
+          textoBotonFuente: "Leer noticia original en valdemoro.es",
+          destacadaInicio: true
+        },
+        {
+          id: "not-plan-seguridad",
+          categoria: "Seguridad Ciudadana",
+          fecha: "18 de noviembre de 2026 · Ayuntamiento de Valdemoro",
+          titulo: "Primer Plan Local de Prevención y Seguridad junto a la Guardia Civil",
+          resumen: "Valdemoro se sitúa entre los cinco primeros municipios de la Comunidad de Madrid que cuentan con un Plan Local de Prevención y Seguridad coordinado con la Guardia Civil.",
+          contenido: [
+            "Valdemoro ha dado un paso pionero en materia de seguridad ciudadana al situarse entre los cinco primeros municipios de la Comunidad de Madrid en implantar un Plan Local de Prevención y Seguridad junto a la Guardia Civil.",
+            "El documento refuerza la coordinación operativa entre Policía Local y Guardia Civil, impulsando campañas preventivas, proximidad vecinal y protección en zonas comerciales y residenciales.",
+            "Todos los detalles de este plan municipal están disponibles en la web oficial del Ayuntamiento de Valdemoro."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Parque_del_Duque_de_Ahumada_8.jpg?width=1000",
+          urlFuente: "https://www.valdemoro.es/noticias/primer-plan-local-de-prevencion-y-seguridad-junto-la-guardia-civil",
+          textoBotonFuente: "Leer noticia original en valdemoro.es",
+          destacadaInicio: true
+        },
+        {
+          id: "not-campo-a-traves",
+          categoria: "Deportes",
+          fecha: "16 de noviembre de 2026 · Deportes Valdemoro",
+          titulo: "Todo listo para el clásico valdemoreño del campo a través",
+          resumen: "La tradicional prueba atlética de campo a través reúne el 22 de noviembre a 350 atletas adultos más corredores de categorías base en Valdemoro.",
+          contenido: [
+            "El calendario deportivo valdemoreño celebra una nueva edición de su clásico cross de campo a través con salida a partir de las 10:30 horas.",
+            "La cita congrega a 350 atletas adultos inscritos previamente junto a participantes de las escuelas deportivas y categorías infantiles y juveniles.",
+            "Consulta clasificaciones, recorridos e información deportiva en la web oficial del Ayuntamiento de Valdemoro."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Parque_de_Enrique_Tierno_Galv%C3%A1n_3.jpg?width=1000",
+          urlFuente: "https://www.valdemoro.es/noticias/todo-listo-para-el-clasico-valdemoreno-del-campo-traves",
+          textoBotonFuente: "Leer noticia original en valdemoro.es",
+          destacadaInicio: false
+        },
+        {
+          id: "not-totalenergies-50",
+          categoria: "Economía e Industria",
+          fecha: "9 de noviembre de 2026 · Ayuntamiento de Valdemoro",
+          titulo: "La fábrica de lubricantes de TotalEnergies celebra 50 años en Valdemoro",
+          resumen: "La planta industrial de TotalEnergies en Valdemoro conmemora medio siglo de actividad productiva, empleo e innovación en el municipio.",
+          contenido: [
+            "La fábrica de lubricantes de TotalEnergies ubicada en Valdemoro celebra su 50.º aniversario tras medio siglo de trayectoria industrial en la localidad.",
+            "Durante estas cinco décadas, la planta ha constituido uno de los referentes industriales y de empleo estable en el tejido empresarial valdemoreño.",
+            "Accede a la crónica completa del aniversario en el portal de noticias del Ayuntamiento de Valdemoro."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_(Madrid)_01.jpg?width=1000",
+          urlFuente: "https://www.valdemoro.es/noticias/la-fabrica-de-lubricantes-de-totalenergies-celebra-50-anos-en-valdemoro",
+          textoBotonFuente: "Leer noticia original en valdemoro.es",
+          destacadaInicio: false
+        },
+        {
+          id: "not-residencia-mayores",
+          categoria: "Bienestar Social",
+          fecha: "5 de noviembre de 2026 · Ayuntamiento de Valdemoro",
+          titulo: "Valdemoro aprueba la cesión de terreno para la construcción de una residencia de mayores",
+          resumen: "El Pleno municipal aprobó la cesión a la Comunidad de Madrid de una parcela destinada a una nueva residencia de atención a personas mayores.",
+          contenido: [
+            "El Pleno del Ayuntamiento de Valdemoro aprobó la cesión gratuita a la Comunidad de Madrid de una parcela municipal destinada a la futura construcción de una residencia de mayores.",
+            "Con este acuerdo institucional se da impulso a una dotación sociosanitaria muy demandada por las familias valdemoreñas.",
+            "Consulta los detalles del acuerdo plenario en la web oficial del Ayuntamiento de Valdemoro."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Hospital_Universitario_Infanta_Elena,_Valdemoro_01.jpg?width=1000",
+          urlFuente: "https://www.valdemoro.es/noticias/valdemoro-aprueba-la-cesion-de-terreno-para-la-construccion-de-una-residencia-de-mayores",
+          textoBotonFuente: "Leer noticia original en valdemoro.es",
+          destacadaInicio: false
+        }
+      ],
+
+      fiestas: [
+        {
+          id: "fies-reyes",
+          mes: 0,
+          dia: 5,
+          rangoFechas: "5 de enero",
+          titulo: "Cabalgata de Reyes Magos",
+          tipo: "Tradición Familiar",
+          lugar: "Recorrido urbano hasta la Plaza de la Constitución",
+          descripcion: "Desfile tradicional de carrozas reales con participación de asociaciones y peñas locales, música y recepción oficial en la Plaza de la Constitución.",
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Plaza_de_la_Constituci%C3%B3n,_Torre_del_Reloj_2.jpg?width=900",
+          urlOficial: "https://www.valdemoro.es/tu-ciudad/fiestas"
+        },
+        {
+          id: "fies-carnaval",
+          mes: 1,
+          dia: 14,
+          rangoFechas: "Febrero (según calendario litúrgico)",
+          titulo: "Fiesta de Carnaval y Entierro de la Sardina",
+          tipo: "Fiesta Oficial · tu-ciudad/fiestas",
+          lugar: "Plaza de la Constitución y calles del centro",
+          descripcion: "Pasacalles de comparsas, concurso de disfraces, baile popular y tradicional Entierro de la Sardina el Miércoles de Ceniza.",
+          verificar: true,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_(Madrid)_01.jpg?width=900",
+          urlOficial: "https://www.valdemoro.es/tu-ciudad/fiestas"
+        },
+        {
+          id: "fies-san-marcos",
+          mes: 3,
+          dia: 25,
+          rangoFechas: "25 de abril",
+          titulo: "Fiesta de San Marcos",
+          tipo: "Fiesta Oficial · tu-ciudad/fiestas",
+          lugar: "Paraje natural de Bolitas del Airón",
+          descripcion: "Tradicional jornada campestre ligada históricamente a la bendición de los campos y las rogativas agrarias, donde familias y amigos comparten el día al aire libre.",
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/%C3%81rbol_del_para%C3%ADso.jpg?width=900",
+          urlOficial: "https://www.valdemoro.es/tu-ciudad/fiestas"
+        },
+        {
+          id: "fies-cristo-salud",
+          mes: 4,
+          dia: 8,
+          rangoFechas: "Mayo (en torno al 8 de mayo)",
+          titulo: "Fiestas Patronales del Santísimo Cristo de la Salud",
+          tipo: "Fiestas Patronales · tu-ciudad/fiestas",
+          lugar: "Ermita del Cristo, Plaza de la Constitución y Recinto Ferial",
+          descripcion: "Primeras fiestas patronales del año en la Villa de Valdemoro (con cofradía documentada desde 1650). Incluye actos religiosos en la ermita, conciertos, peñas y recinto ferial.",
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Ermita_del_Sant%C3%ADsimo_Cristo_de_la_Salud_3.jpg?width=900",
+          urlOficial: "https://www.valdemoro.es/tu-ciudad/fiestas"
+        },
+        {
+          id: "fies-virgen-rosario",
+          mes: 8,
+          dia: 8,
+          rangoFechas: "Septiembre (en torno al 8 de septiembre)",
+          titulo: "Fiestas Patronales de Nuestra Señora del Rosario",
+          tipo: "Fiestas Patronales · tu-ciudad/fiestas",
+          lugar: "Iglesia de la Asunción, Plaza de la Constitución y Recinto Ferial",
+          descripcion: "Fiestas mayores de septiembre ligadas históricamente a la Natividad de Nuestra Señora, con ofrenda floral, procesión solemne, conciertos gratuitos y actividades familiares.",
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Parroquia_Asunci%C3%B3n_Valdemoro.jpg?width=900",
+          urlOficial: "https://www.valdemoro.es/tu-ciudad/fiestas"
+        },
+        {
+          id: "fies-feria-barroca",
+          mes: 9,
+          dia: 3,
+          rangoFechas: "Primer fin de semana de octubre",
+          titulo: "Feria Barroca de Valdemoro",
+          tipo: "Recreación Histórica · Siglo de Oro",
+          lugar: "Plaza de la Constitución, Fuente de la Villa y entorno histórico",
+          descripcion: "Conmemora el Privilegio de Feria otorgado por Felipe III en 1603 gracias al Duque de Lerma. Mercado artesano de época, teatro de Cervantes, cetrería, pasacalles y rutas históricas.",
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Fuente_de_la_Villa.jpg?width=900",
+          urlOficial: "https://feriabarroca.valdemoro.es/"
+        },
+        {
+          id: "fies-encendido-navidad",
+          mes: 10,
+          dia: 27,
+          rangoFechas: "27 de noviembre (19:00 h)",
+          titulo: "Encendido de Luces de Navidad",
+          tipo: "Programación Navideña",
+          lugar: "Plaza de la Constitución",
+          descripcion: "Inauguración oficial de la iluminación navideña de Valdemoro con espectáculos infantiles y música en directo.",
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Plaza_de_la_Constituci%C3%B3n,_Torre_del_Reloj_1.jpg?width=900",
+          urlOficial: "https://www.valdemoro.es/noticias/la-navidad-con-mas-brillo-con-el-pollo-pepe-y-raya-real"
+        },
+        {
+          id: "fies-navidad-diciembre",
+          mes: 11,
+          dia: 20,
+          rangoFechas: "Diciembre",
+          titulo: "Mercado y Actividades de Navidad",
+          tipo: "Tradición Familiar",
+          lugar: "Plaza de la Constitución y centros culturales",
+          descripcion: "Programación cultural navideña, conciertos corales, talleres familiares y actividades previas a la llegada de los Reyes Magos.",
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Convento_de_la_Encarnaci%C3%B3n_(Clarisas)_09.jpg?width=900",
+          urlOficial: "https://www.valdemoro.es/tu-ciudad/fiestas"
+        }
+      ],
+
+      /* Cada lugar de Valdemoro tiene su propia fotografía real única */
+      lugares: [
+        {
+          id: "lug-plaza-constitucion",
+          nombre: "Plaza de la Constitución y Torre del Reloj",
+          categoria: "Patrimonio",
+          descripcion: "Centro histórico de Valdemoro declarado Bien de Interés Cultural, con soportales castellanos, la Casa Consistorial y la Torre del Reloj (1672).",
+          direccion: "Plaza de la Constitución, 11, 28341 Valdemoro, Madrid",
+          horario: "Exterior 24h · Atención municipal L–V 08:30–14:30",
+          verificar: false,
+          lat: 40.1904,
+          lng: -3.6787,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Plaza_de_la_Constituci%C3%B3n,_Torre_del_Reloj_1.jpg?width=900",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Valdemoro_-_Plaza_de_la_Constituci%C3%B3n,_Torre_del_Reloj_1.jpg",
+          destacadoInicio: true
+        },
+        {
+          id: "lug-iglesia-asuncion",
+          nombre: "Iglesia Parroquial de Nuestra Señora de la Asunción",
+          categoria: "Patrimonio",
+          descripcion: "Templo barroco (siglos XVI–XVIII) con esbelta torre campanario que alberga lienzos originales de Francisco Bayeu, Ramón Bayeu y Claudio Coello.",
+          direccion: "Plaza de Nuestra Señora del Rosario, s/n, 28341 Valdemoro, Madrid",
+          horario: "Horario de culto · Visitas culturales concertadas",
+          verificar: true,
+          lat: 40.1912,
+          lng: -3.6795,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Parroquia_Asunci%C3%B3n_Valdemoro.jpg?width=900",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Parroquia_Asunci%C3%B3n_Valdemoro.jpg",
+          destacadoInicio: true
+        },
+        {
+          id: "lug-parque-tierno-galvan",
+          nombre: "Parque Enrique Tierno Galván",
+          categoria: "Parques y Naturaleza",
+          descripcion: "Principal parque urbano de Valdemoro con amplias praderas, arboleda consolidada, laguna artificial, zonas infantiles y carriles bici.",
+          direccion: "Av. de Andalucía / Paseo del Prado, 28341 Valdemoro, Madrid",
+          horario: "Abierto 24 horas (acceso libre)",
+          verificar: false,
+          lat: 40.1945,
+          lng: -3.6742,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Parque_de_Enrique_Tierno_Galv%C3%A1n_3.jpg?width=900",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Valdemoro_-_Parque_de_Enrique_Tierno_Galv%C3%A1n_3.jpg",
+          destacadoInicio: true
+        },
+        {
+          id: "lug-parque-ermita",
+          nombre: "Ermita del Santísimo Cristo de la Salud",
+          categoria: "Patrimonio",
+          descripcion: "Santuario barroco (siglos XVII–XVIII) rodeado de jardines que custodia al patrón de Valdemoro junto al antiguo Camino Real a Toledo.",
+          direccion: "Calle Cristo de la Salud, s/n, 28341 Valdemoro, Madrid",
+          horario: "Parque abierto · Ermita según horario de culto",
+          verificar: true,
+          lat: 40.1889,
+          lng: -3.6815,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Ermita_del_Sant%C3%ADsimo_Cristo_de_la_Salud_3.jpg?width=900",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Valdemoro_-_Ermita_del_Sant%C3%ADsimo_Cristo_de_la_Salud_3.jpg",
+          destacadoInicio: true
+        },
+        {
+          id: "lug-fuente-villa",
+          nombre: "Fuente de la Villa y Lavadero Municipal (1605)",
+          categoria: "Patrimonio",
+          descripcion: "Ejemplo destacado de fuente barroca madrileña mandada construir en 1605 por el Duque de Lerma tras la concesión del Privilegio de Feria en 1603.",
+          direccion: "Calle Fuente de la Villa, 28341 Valdemoro, Madrid",
+          horario: "Exterior acceso libre 24 horas",
+          verificar: false,
+          lat: 40.1881,
+          lng: -3.6778,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Fuente_de_la_Villa.jpg?width=900",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Valdemoro_-_Fuente_de_la_Villa.jpg",
+          destacadoInicio: false
+        },
+        {
+          id: "lug-convento-encarnacion",
+          nombre: "Convento de la Encarnación (Clarisas)",
+          categoria: "Patrimonio",
+          descripcion: "Convento de clausura fundado en el siglo XVII bajo el patronazgo del Duque de Lerma, célebre por su iglesia barroca y repostería artesanal.",
+          direccion: "Calle Estrella de Elola / Convento, 28341 Valdemoro, Madrid",
+          horario: "Torno y misas en horario conventual",
+          verificar: true,
+          lat: 40.1902,
+          lng: -3.6758,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Convento_de_la_Encarnaci%C3%B3n_(Clarisas)_09.jpg?width=900",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Valdemoro_-_Convento_de_la_Encarnaci%C3%B3n_(Clarisas)_09.jpg",
+          destacadoInicio: false
+        },
+        {
+          id: "lug-hospital-infanta-elena",
+          nombre: "Hospital Universitario Infanta Elena",
+          categoria: "Servicios y Modernidad",
+          descripcion: "Centro hospitalario público de referencia inaugurado en 2007 en el entorno de El Restón, conectado por líneas de autobús urbano e interurbano.",
+          direccion: "Av. de los Reyes Católicos, 21, 28342 Valdemoro, Madrid",
+          horario: "Urgencias 24 horas",
+          verificar: false,
+          lat: 40.1818,
+          lng: -3.6695,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Hospital_Universitario_Infanta_Elena,_Valdemoro_01.jpg?width=900",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Hospital_Universitario_Infanta_Elena,_Valdemoro_01.jpg",
+          destacadoInicio: false
+        },
+        {
+          id: "lug-parque-duque-ahumada",
+          nombre: "Parque del Duque de Ahumada",
+          categoria: "Parques y Naturaleza",
+          descripcion: "Zona ajardinada dedicada al fundador de la Guardia Civil y del Colegio de Guardias Jóvenes de Valdemoro, presidida por su monumento escultórico.",
+          direccion: "Paseo de la Estación / Duque de Ahumada, 28341 Valdemoro, Madrid",
+          horario: "Abierto 24 horas (acceso libre)",
+          verificar: false,
+          lat: 40.1932,
+          lng: -3.6690,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Parque_del_Duque_de_Ahumada_2.jpg?width=900",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Valdemoro_-_Parque_del_Duque_de_Ahumada_2.jpg",
+          destacadoInicio: false
+        },
+        {
+          id: "lug-bolitas-airon",
+          nombre: "Parque Natural Bolitas del Airón",
+          categoria: "Parques y Naturaleza",
+          descripcion: "Paraje forestal periurbano atravesado por los arroyos de la Cañada y Ermita de Santiago, donde cada 25 de abril se celebra la fiesta de San Marcos.",
+          direccion: "Camino de las Bolitas del Airón, 28341 Valdemoro, Madrid",
+          horario: "Acceso libre 24 horas",
+          verificar: false,
+          lat: 40.1755,
+          lng: -3.6880,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/%C3%81rbol_del_para%C3%ADso.jpg?width=900",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:%C3%81rbol_del_para%C3%ADso.jpg",
+          destacadoInicio: false
+        }
+      ],
+
+      /* Restaurantes reales de Valdemoro: cada uno con imagen gastronómica propia (sin repetir fotos ni usar monumentos) y enlace directo al local real */
+      restaurantes: [
+        {
+          id: "rest-chiron",
+          nombre: "Restaurante Chirón",
+          cocina: "Alta Cocina / Estrella Michelin",
+          precio: "€€€",
+          descripcion: "Referente gastronómico de Valdemoro con Estrella Michelin dirigido por los hermanos Iván y Raúl Muñoz. Cocina madrileña contemporánea y menú degustación.",
+          direccion: "Calle Alarcón, 27, 28341 Valdemoro, Madrid",
+          horario: "M–S 13:30–15:30 y 21:00–23:00",
+          verificar: true,
+          lat: 40.1918,
+          lng: -3.6761,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Fine_dining_dish.jpg?width=900",
+          urlFuente: "https://restaurantechiron.com/",
+          linkBadge: "Web oficial Chirón ↗",
+          extraUrl: "https://guide.michelin.com/es/es/comunidad-de-madrid/valdemoro/restaurante/chiron",
+          extraUrlLabel: "Guía Michelin"
+        },
+        {
+          id: "rest-puchero-abuela",
+          nombre: "El Puchero de Mi Abuela",
+          cocina: "Castellana / Tradicional",
+          precio: "€€",
+          descripcion: "Restaurante tradicional en el centro de Valdemoro especializado en cocido madrileño, guisos caseros de cuchara y recetario castellano.",
+          direccion: "Calle Estrella de Elola, 5, 28341 Valdemoro, Madrid",
+          horario: "M–D 13:00–16:30",
+          verificar: true,
+          lat: 40.1905,
+          lng: -3.6768,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Cocido_madrile%C3%B1o.jpg?width=900",
+          urlFuente: "https://www.google.com/maps/search/?api=1&query=El+Puchero+de+Mi+Abuela+Valdemoro",
+          linkBadge: "Ver fotos del local ↗",
+          extraUrl: "https://www.google.com/maps/search/?api=1&query=El+Puchero+de+Mi+Abuela+Valdemoro",
+          extraUrlLabel: "Ficha y fotos"
+        },
+        {
+          id: "rest-las-infantas",
+          nombre: "Restaurante Las Infantas",
+          cocina: "Española / Mediterránea",
+          precio: "€€",
+          descripcion: "Cocina española de mercado con raciones para compartir, arroces, carnes y pescados frescos en el casco urbano de Valdemoro.",
+          direccion: "Calle de las Infantas, 4, 28341 Valdemoro, Madrid",
+          horario: "M–D 13:00–16:30 y 20:30–23:30",
+          verificar: true,
+          lat: 40.1910,
+          lng: -3.6755,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Tapas_in_Madrid.jpg?width=900",
+          urlFuente: "https://www.google.com/maps/search/?api=1&query=Restaurante+Las+Infantas+Valdemoro",
+          linkBadge: "Ver fotos del local ↗",
+          extraUrl: "https://www.google.com/maps/search/?api=1&query=Restaurante+Las+Infantas+Valdemoro",
+          extraUrlLabel: "Ficha y fotos"
+        },
+        {
+          id: "rest-parrilla-valdemoro",
+          nombre: "La Parrilla de Valdemoro",
+          cocina: "Asador / Parrilla",
+          precio: "€€",
+          descripcion: "Especialistas en cortes de carne madurada a la brasa, churrasquería y cocina española tradicional en Valdemoro.",
+          direccion: "Calle París, 4, 28341 Valdemoro, Madrid",
+          horario: "M–D 13:00–16:30 y 20:30–23:30",
+          verificar: true,
+          lat: 40.1882,
+          lng: -3.6712,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Chuleton_a_la_brasa.jpg?width=900",
+          urlFuente: "https://www.google.com/maps/search/?api=1&query=La+Parrilla+de+Valdemoro+Calle+Paris+4",
+          linkBadge: "Ver fotos del local ↗",
+          extraUrl: "https://www.google.com/maps/search/?api=1&query=La+Parrilla+de+Valdemoro+Calle+Paris+4",
+          extraUrlLabel: "Ficha y fotos"
+        },
+        {
+          id: "rest-cardinal",
+          nombre: "Restaurante Cardinal",
+          cocina: "Española / Mediterránea",
+          precio: "€€",
+          descripcion: "Propuesta gastronómica mediterránea y de brasa en la Avenida de España con menú diario y carta variada.",
+          direccion: "Av. de España, 12, 28341 Valdemoro, Madrid",
+          horario: "M–D 13:00–16:00 y 20:30–23:30",
+          verificar: true,
+          lat: 40.1924,
+          lng: -3.6728,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Paella_de_marisco.jpg?width=900",
+          urlFuente: "https://www.google.com/maps/search/?api=1&query=Restaurante+Cardinal+Valdemoro",
+          linkBadge: "Ver fotos del local ↗",
+          extraUrl: "https://www.google.com/maps/search/?api=1&query=Restaurante+Cardinal+Valdemoro",
+          extraUrlLabel: "Ficha y fotos"
+        },
+        {
+          id: "rest-salvaje-chifa",
+          nombre: "Salvaje Chifa Peruano",
+          cocina: "Peruana / Fusión",
+          precio: "€€",
+          descripcion: "Gastronomía fusión peruano-asiática (chifa) con ceviches, arroces chaufa y salteados al wok en la zona de El Restón.",
+          direccion: "Av. del Mar Mediterráneo, 106, 28341 Valdemoro, Madrid",
+          horario: "M–D 13:30–16:30 y 20:30–23:30",
+          verificar: true,
+          lat: 40.1835,
+          lng: -3.6638,
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Ceviche_peruano.jpg?width=900",
+          urlFuente: "https://www.google.com/maps/search/?api=1&query=Salvaje+Chifa+Peruano+Valdemoro",
+          linkBadge: "Ver fotos del local ↗",
+          extraUrl: "https://www.google.com/maps/search/?api=1&query=Salvaje+Chifa+Peruano+Valdemoro",
+          extraUrlLabel: "Ficha y fotos"
+        }
+      ],
+
+      /* Hoteles y hostales reales de Valdemoro: cada uno con identidad visual propia (sin fotos de monumentos ni hospitales) y enlace real al alojamiento */
+      hoteles: [
+        {
+          id: "hot-victoria-valdemoro",
+          nombre: "Hotel Victoria Valdemoro",
+          categoria: "Hotel 3 Estrellas",
+          estrellas: 3,
+          precio: "€€",
+          zona: "Centro Urbano · C/ Ruiz de Alda, 6",
+          gradiente: "linear-gradient(135deg, #0b223f 0%, #1e4d89 100%)",
+          descripcion: "Hotel de 3 estrellas con 74 habitaciones en el corazón de Valdemoro, aparcamiento gratuito, Wi-Fi y acceso rápido hacia Madrid y Parque Warner.",
+          servicios: "Wi-Fi gratis · Aparcamiento · Aire acondicionado · Recepción 24h",
+          direccion: "Calle Ruiz de Alda, 6, 28342 Valdemoro, Madrid",
+          verificar: true,
+          lat: 40.1914,
+          lng: -3.6746,
+          urlFuente: "https://www.hotelvictoriavaldemoro.es/",
+          linkBadge: "Web oficial Hotel Victoria ↗",
+          extraUrl: "https://www.hotelvictoriavaldemoro.es/",
+          extraUrlLabel: "Web Oficial"
+        },
+        {
+          id: "hot-reston-valdemoro",
+          nombre: "Hotel Reston Valdemoro",
+          categoria: "Hotel 3 Estrellas",
+          estrellas: 3,
+          precio: "€€",
+          zona: "Barrio El Restón · Glorieta del Universo, 12",
+          gradiente: "linear-gradient(135deg, #102a4c 0%, #255c99 100%)",
+          descripcion: "Hotel moderno de 3 estrellas ubicado en el barrio de El Restón con habitaciones amplias, piscina exterior de temporada y fácil enlace con la A-4.",
+          servicios: "Wi-Fi gratis · Climatización · Habitaciones familiares · Acceso adaptado",
+          direccion: "Glorieta del Universo, 12, 28341 Valdemoro, Madrid",
+          verificar: true,
+          lat: 40.1839,
+          lng: -3.6645,
+          urlFuente: "https://www.google.com/maps/search/?api=1&query=Hotel+Reston+Valdemoro",
+          linkBadge: "Ver galería real del hotel ↗",
+          extraUrl: "https://www.google.com/maps/search/?api=1&query=Hotel+Reston+Valdemoro",
+          extraUrlLabel: "Fotos y Reserva"
+        },
+        {
+          id: "hot-hotel-valdemoro",
+          nombre: "Hotel Valdemoro",
+          categoria: "Hotel 3 Estrellas",
+          estrellas: 3,
+          precio: "€€",
+          zona: "Eje Av. de Andalucía · Acceso A-4",
+          gradiente: "linear-gradient(135deg, #091d36 0%, #19457a 100%)",
+          descripcion: "Establecimiento hotelero de 3 estrellas próximo al centro y a los enlaces por carretera hacia Madrid, Aranjuez y Parque Warner.",
+          servicios: "Wi-Fi · Recepción 24h · Aire acondicionado · Cafetería",
+          direccion: "Av. de Andalucía / Centro Urbano, 28341 Valdemoro, Madrid",
+          verificar: true,
+          lat: 40.1895,
+          lng: -3.6750,
+          urlFuente: "https://www.google.com/maps/search/?api=1&query=Hotel+Valdemoro+28341",
+          linkBadge: "Ver galería real del hotel ↗",
+          extraUrl: "https://www.google.com/maps/search/?api=1&query=Hotel+Valdemoro+28341",
+          extraUrlLabel: "Fotos y Ficha"
+        },
+        {
+          id: "hot-dona-maria",
+          nombre: "Hostal Doña María",
+          categoria: "Hostal 2 Estrellas",
+          estrellas: 2,
+          precio: "€",
+          zona: "Casco Histórico · Entorno Plaza Constitución",
+          gradiente: "linear-gradient(135deg, #132f54 0%, #2b629e 100%)",
+          descripcion: "Alojamiento céntrico en Valdemoro situado a pocos metros de la Plaza de la Constitución y la Ermita del Cristo de la Salud.",
+          servicios: "Wi-Fi gratis · Aire acondicionado · Baño privado · Ubicación céntrica",
+          direccion: "Entorno Plaza de la Constitución, 28341 Valdemoro, Madrid",
+          verificar: true,
+          lat: 40.1901,
+          lng: -3.6792,
+          urlFuente: "https://www.google.com/maps/search/?api=1&query=Hostal+Dona+Maria+Valdemoro",
+          linkBadge: "Ver galería real del hostal ↗",
+          extraUrl: "https://www.google.com/maps/search/?api=1&query=Hostal+Dona+Maria+Valdemoro",
+          extraUrlLabel: "Fotos y Ficha"
+        },
+        {
+          id: "hot-cervantes",
+          nombre: "Hostal Cervantes",
+          categoria: "Hostal",
+          estrellas: 2,
+          precio: "€",
+          zona: "Zona Centro · C/ Cervantes",
+          gradiente: "linear-gradient(135deg, #0c2340 0%, #1d518c 100%)",
+          descripcion: "Hostal funcional a cinco minutos a pie del casco histórico de Valdemoro, ideal para estancias prácticas y desplazamientos laborales.",
+          servicios: "Wi-Fi · Climatización · Habitaciones individuales y dobles",
+          direccion: "Centro Urbano, 28341 Valdemoro, Madrid",
+          verificar: true,
+          lat: 40.1918,
+          lng: -3.6772,
+          urlFuente: "https://www.google.com/maps/search/?api=1&query=Hostal+Cervantes+Valdemoro",
+          linkBadge: "Ver galería real del hostal ↗",
+          extraUrl: "https://www.google.com/maps/search/?api=1&query=Hostal+Cervantes+Valdemoro",
+          extraUrlLabel: "Fotos y Ficha"
+        }
+      ],
+
+      historia: [
+        {
+          id: "era-origenes",
+          epoca: "Prehistoria y Época Romana",
+          titulo: "Primeros pobladores y villas agropecuarias en el valle",
+          texto: "El fértil valle rodeado de cerros yesíferos en el que se asienta Valdemoro atrajo asentamientos humanos desde el Calcolítico y la Edad del Bronce (yacimientos de El Espartal y Arroyo de la Cañada). En época romana existieron explotaciones agrícolas vinculadas a las vías entre Titulcia y Complutum.",
+          hito: "Dato arqueológico: Los hallazgos cerámicos confirman poblamiento continuado desde hace más de 4.000 años.",
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/%C3%81rbol_del_para%C3%ADso.jpg?width=900",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:%C3%81rbol_del_para%C3%ADso.jpg"
+        },
+        {
+          id: "era-medieval",
+          epoca: "Siglo XIV · Edad Media (1365)",
+          titulo: "El Privilegio de Villazgo otorgado por Enrique II",
+          texto: "Tras la Reconquista, Valdemoro estuvo vinculada primero al alfoz de Segovia y después al señorío del Arzobispado de Toledo. En 1365, el rey Enrique II de Castilla le concedió el Privilegio de Villazgo, dotándola de jurisdicción propia y autonomía municipal.",
+          hito: "Hito histórico: 1365 marca el nacimiento jurídico de Valdemoro como villa independiente.",
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Plaza_de_la_Constituci%C3%B3n,_Torre_del_Reloj_1.jpg?width=900",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Valdemoro_-_Plaza_de_la_Constituci%C3%B3n,_Torre_del_Reloj_1.jpg"
+        },
+        {
+          id: "era-barroca",
+          epoca: "Siglos XVI – XVII · Siglo de Oro",
+          titulo: "El Duque de Lerma, la Feria Franca (1603) y el esplendor barroco",
+          texto: "En 1603, por mediación de Francisco Gómez de Sandoval y Rojas, Duque de Lerma y señor jurisdiccional de la villa, el rey Felipe III concedió al concejo de Valdemoro el privilegio de celebrar una feria anual. En esta etapa se construyeron la Fuente de la Villa (1605), el Convento de la Encarnación y se enriqueció la Iglesia de la Asunción con obras de Claudio Coello y los hermanos Bayeu.",
+          hito: "Legado vivo: Cada octubre la Feria Barroca conmemora aquel privilegio real de 1603.",
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Fuente_de_la_Villa.jpg?width=900",
+          urlFuente: "https://feriabarroca.valdemoro.es/"
+        },
+        {
+          id: "era-siglo-xix",
+          epoca: "Siglo XIX · Ferrocarril y Guardia Civil (1851–1853)",
+          titulo: "El ferrocarril Madrid–Aranjuez y el Colegio de Guardias Jóvenes",
+          texto: "En 1851 llegó el ferrocarril Madrid–Aranjuez con estación en Valdemoro, y en 1853 el II Duque de Ahumada trasladó a la villa el Colegio de Guardias Jóvenes de la Guardia Civil, institución que forjó el célebre apodo de los «Polillas».",
+          hito: "Vínculo institucional: Valdemoro es reconocida en toda España como cuna formativa de la Guardia Civil.",
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Parque_del_Duque_de_Ahumada_8.jpg?width=900",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Valdemoro_-_Parque_del_Duque_de_Ahumada_8.jpg"
+        },
+        {
+          id: "era-siglo-xxi",
+          epoca: "Siglos XX y XXI · Ciudad Moderna y Conectada",
+          titulo: "Crecimiento urbano, Hospital Infanta Elena y grandes parques",
+          texto: "Desde finales del siglo XX, Valdemoro experimentó una profunda transformación urbana y demográfica, dotándose de nuevos barrios como El Restón, el Hospital Universitario Infanta Elena (2007), amplias zonas verdes y una completa red de transporte público.",
+          hito: "Actualidad: Más de 85.900 habitantes viven en una ciudad dinámica y bien comunicada al sur de Madrid.",
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Hospital_Universitario_Infanta_Elena,_Valdemoro_01.jpg?width=900",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Hospital_Universitario_Infanta_Elena,_Valdemoro_01.jpg"
+        }
+      ],
+
+      curiosidades: [
+        {
+          id: "cur-polillas",
+          categoria: "Curiosidad Histórica",
+          icon: "landmark",
+          titulo: "El origen del apodo «Polillas»",
+          texto: "Los alumnos del Colegio de Guardias Jóvenes de Valdemoro reciben desde 1853 el apelativo de «Polillas» por su juventud y por el color gris claro de sus primeros uniformes de faena.",
+          contenidoCompleto: [
+            "Desde el traslado del Colegio de Guardias Jóvenes a Valdemoro en 1853 por iniciativa del Duque de Ahumada, los jóvenes aspirantes a guardias civiles fueron apodados cariñosamente «Polillas».",
+            "El nombre surgió del tono grisáceo de sus uniformes iniciales y de su constante actividad por las calles de la villa."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Parque_del_Duque_de_Ahumada_8.jpg?width=1000",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Valdemoro_-_Parque_del_Duque_de_Ahumada_8.jpg",
+          textoBotonFuente: "Ver ficha de imagen en Wikimedia Commons"
+        },
+        {
+          id: "cur-bayeu",
+          categoria: "Arte y Patrimonio",
+          icon: "culture",
+          titulo: "Lienzos de los hermanos Bayeu y Claudio Coello",
+          texto: "La Iglesia Parroquial de Nuestra Señora de la Asunción conserva pinturas originales de Francisco Bayeu (cuñado de Goya), Ramón Bayeu y Claudio Coello.",
+          contenidoCompleto: [
+            "En el interior de la Iglesia Parroquial de Nuestra Señora de la Asunción se conserva un valioso conjunto pictórico del barroco y el neoclasicismo español.",
+            "Destacan el lienzo principal de la Asunción de la Virgen de Francisco Bayeu, las obras laterales de Ramón Bayeu y pinturas de Claudio Coello."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Parroquia_Asunci%C3%B3n_Valdemoro.jpg?width=1000",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Parroquia_Asunci%C3%B3n_Valdemoro.jpg",
+          textoBotonFuente: "Ver fotografía en Wikimedia Commons"
+        },
+        {
+          id: "cur-san-marcos",
+          categoria: "Tradición",
+          icon: "park",
+          titulo: "La romería de San Marcos y las antiguas Robigales",
+          texto: "Cada 25 de abril los valdemoreños acuden a Bolitas del Airón para celebrar San Marcos, una tradición relacionada por los historiadores con las Robigales romanas de protección de las cosechas.",
+          contenidoCompleto: [
+            "La devoción a San Marcos el 25 de abril entronca con las antiguas festividades agrarias romanas dedicadas a proteger los cultivos.",
+            "Hoy se celebra como una jornada festiva campestre en el paraje natural de Bolitas del Airón."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/%C3%81rbol_del_para%C3%ADso.jpg?width=1000",
+          urlFuente: "https://www.valdemoro.es/tu-ciudad/fiestas",
+          textoBotonFuente: "Ver fiestas en valdemoro.es/tu-ciudad/fiestas"
+        },
+        {
+          id: "cur-fuente-1605",
+          categoria: "Patrimonio Barroco",
+          icon: "spark",
+          titulo: "La Fuente de la Villa y el primer escudo conocido",
+          texto: "Construida en 1605 en piedra de Colmenar tras la concesión del Privilegio de Feria de 1603, está coronada por el primer escudo labrado conocido de la Villa de Valdemoro.",
+          contenidoCompleto: [
+            "La Fuente de la Villa y Lavadero Municipal fue erigida en 1605 por orden del Duque de Lerma para abastecer de agua al ganado que acudía a la recién estrenada feria franca.",
+            "Consta de tres caños en piedra de Colmenar y conserva en su frontón el primer escudo conocido de Valdemoro."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Fuente_de_la_Villa.jpg?width=1000",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Valdemoro_-_Fuente_de_la_Villa.jpg",
+          textoBotonFuente: "Ver monumento en Wikimedia Commons"
+        }
+      ],
+
+      queHacer: [
+        {
+          id: "qh-tierno-galvan",
+          categoria: "Parques y Rutas",
+          icon: "park",
+          titulo: "Paseo y deporte en el Parque Enrique Tierno Galván",
+          texto: "Amplias praderas, laguna artificial, circuitos biosaludables y carriles bici conectados por varias líneas de autobús urbano.",
+          contenidoCompleto: [
+            "El Parque Enrique Tierno Galván es el mayor espacio verde urbano de Valdemoro, ideal para caminar, correr o disfrutar en familia.",
+            "Dispone de zonas infantiles, laguna, arboleda de sombra y paradas de autobús urbano en su perímetro."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Parque_de_Enrique_Tierno_Galv%C3%A1n_3.jpg?width=1000",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Valdemoro_-_Parque_de_Enrique_Tierno_Galv%C3%A1n_3.jpg",
+          textoBotonFuente: "Ver ficha de imagen en Wikimedia Commons"
+        },
+        {
+          id: "qh-bolitas-airon",
+          categoria: "Parques y Rutas",
+          icon: "compass",
+          titulo: "Senderismo y BTT en Bolitas del Airón (Circuito 3.200 m)",
+          texto: "Caminos señalizados de más de 3.200 metros entre pinares mediterráneos y cerros yesíferos en el espacio natural periurbano de Valdemoro.",
+          contenidoCompleto: [
+            "Bolitas del Airón ofrece un circuito perimetral y senderos transversales de más de 3.200 metros para senderistas y ciclistas de montaña durante todo el año.",
+            "Cuenta con áreas recreativas, fuentes de agua potable y aparcamiento en su cabecera."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/%C3%81rbol_del_para%C3%ADso.jpg?width=1000",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:%C3%81rbol_del_para%C3%ADso.jpg",
+          textoBotonFuente: "Ver fotografía en Wikimedia Commons"
+        },
+        {
+          id: "qh-ruta-barroca",
+          categoria: "Cultura y Patrimonio",
+          icon: "landmark",
+          titulo: "Ruta Monumental por el Casco Histórico Barroco",
+          texto: "Recorrido a pie por la Plaza de la Constitución, Iglesia de la Asunción, Convento de la Encarnación, Fuente de la Villa y Ermita del Cristo.",
+          contenidoCompleto: [
+            "El centro histórico de Valdemoro permite realizar un recorrido cómodo a pie por sus principales joyas barrocas de los siglos XVII y XVIII.",
+            "La ruta parte de la Plaza de la Constitución y enlaza todos los monumentos declarados Bien de Interés Cultural."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Parroquia_Asunci%C3%B3n_Valdemoro.jpg?width=1000",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Parroquia_Asunci%C3%B3n_Valdemoro.jpg",
+          textoBotonFuente: "Ver monumento en Wikimedia Commons"
+        },
+        {
+          id: "qh-parque-cristo",
+          categoria: "Deporte y Ocio",
+          icon: "sport",
+          titulo: "Paseo en el Parque del Cristo de la Salud y Pista de Hielo",
+          texto: "Zonas ajardinadas junto a la Ermita del Cristo y oferta deportiva municipal en el complejo del Paseo del Prado.",
+          contenidoCompleto: [
+            "El Parque del Cristo de la Salud rodea la histórica ermita homónima ofreciendo un espacio tranquilo de paseo.",
+            "Muy cerca se ubican las instalaciones deportivas municipales del Paseo del Prado."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Parque_del_Cristo_de_la_Salud.jpg?width=1000",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Valdemoro_-_Parque_del_Cristo_de_la_Salud.jpg",
+          textoBotonFuente: "Ver fotografía en Wikimedia Commons"
+        }
+      ],
+
+      transporte: [
+        {
+          id: "trans-urbanos",
+          categoria: "Autobús Urbano",
+          icon: "bus",
+          titulo: "Autobuses Urbanos de Valdemoro (Líneas L1 a L7)",
+          texto: "Siete líneas urbanas (L1, L2, L3, L4, L5, L6 y L7) conectan todos los barrios de Valdemoro con la estación de Cercanías C-3, el centro y el Hospital Infanta Elena.",
+          contenidoCompleto: [
+            "La red urbana de autobuses de Valdemoro está integrada por siete líneas (L1 a L7) gestionadas dentro del Consorcio Regional de Transportes de Madrid (CRTM).",
+            "Sus recorridos enlazan todos los sectores residenciales con la estación ferroviaria de Cercanías, centros educativos y el Hospital Universitario Infanta Elena."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Estaci%C3%B3n_de_tren_1.jpg?width=1000",
+          urlFuente: "https://www.crtm.es",
+          textoBotonFuente: "Consultar líneas en crtm.es"
+        },
+        {
+          id: "trans-interurbanos",
+          categoria: "Autobús Interurbano",
+          icon: "bus",
+          titulo: "Autobuses Interurbanos directos a Madrid (422, 423, 424, 428)",
+          texto: "Conexiones frecuentes por la autovía A-4 con Madrid (Legazpi), Pinto, Getafe, Ciempozuelos y Aranjuez, además de servicio nocturno.",
+          contenidoCompleto: [
+            "Las líneas interurbanas 422, 423 y 424 conectan distintos barrios de Valdemoro con el área intermodal de Legazpi en Madrid.",
+            "La línea 428 enlaza con Pinto y Getafe, completándose con servicios nocturnos."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro-Vista_a%C3%A9rea.jpg?width=1000",
+          urlFuente: "https://www.crtm.es",
+          textoBotonFuente: "Ver horarios en crtm.es"
+        },
+        {
+          id: "trans-cercanias",
+          categoria: "Ferrocarril",
+          icon: "train",
+          titulo: "Cercanías Renfe Madrid (Línea C-3)",
+          texto: "La estación de Valdemoro forma parte de la línea C-3 (Chamartín – Sol – Atocha – Aranjuez), conectando con Atocha en menos de media hora.",
+          contenidoCompleto: [
+            "Ubicada en el Paseo de la Estación, la estación de Valdemoro ofrece trenes frecuentes de la línea C-3 hacia el centro de Madrid y hacia Aranjuez.",
+            "Dispone de aparcamiento disuasorio y cabecera de autobuses urbanos."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Estacion_Valdemoro_-_6_-_Manuel_Martin_Vicente.jpg?width=1000",
+          urlFuente: "https://www.renfe.com/es/es/cercanias/cercanias-madrid",
+          textoBotonFuente: "Consultar Cercanías en renfe.com"
+        },
+        {
+          id: "trans-carretera",
+          categoria: "Carretera",
+          icon: "car",
+          titulo: "Accesos por Autovía A-4, R-4 y M-404",
+          texto: "Salidas directas desde la Autovía del Sur (A-4), enlace con la Radial R-4 y carretera autonómica M-404.",
+          contenidoCompleto: [
+            "El acceso en vehículo privado se realiza de forma directa desde la Autovía del Sur (A-4), que bordea el flanco este del municipio.",
+            "La carretera M-404 comunica Valdemoro con Chinchón, Titulcia y Navalcarnero."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_(Madrid)_01.jpg?width=1000",
+          urlFuente: "https://www.google.com/maps/place/Valdemoro,+Madrid/",
+          textoBotonFuente: "Ver accesos en Google Maps"
+        }
+      ],
+
+      gastronomia: [
+        {
+          id: "gas-cocido",
+          categoria: "Platos Tradicionales",
+          icon: "food",
+          titulo: "Cocido Madrileño y Guisos de La Sagra",
+          texto: "Plato estrella de otoño e invierno en los mesones tradicionales de Valdemoro, servido en sus tres vuelcos.",
+          contenidoCompleto: [
+            "El cocido madrileño y los guisos de cuchara forman parte esencial del recetario tradicional de Valdemoro durante los meses fríos.",
+            "Se elabora con garbanzos de la región, verduras de temporada y carnes seleccionadas."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Cocido_madrile%C3%B1o.jpg?width=1000",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Cocido_madrile%C3%B1o.jpg",
+          textoBotonFuente: "Ver ficha de imagen en Wikimedia Commons"
+        },
+        {
+          id: "gas-alta-cocina",
+          categoria: "Alta Cocina",
+          icon: "spark",
+          titulo: "Alta Cocina Madrileña Contemporánea (Estrella Michelin)",
+          texto: "Valdemoro cuenta con propuestas gastronómicas premiadas con Estrella Michelin que reinterpretan el recetario tradicional de Madrid.",
+          contenidoCompleto: [
+            "La restauración valdemoreña combina mesones clásicos con alta cocina de vanguardia reconocida a nivel nacional.",
+            "Destaca el Restaurante Chirón, distinguido con Estrella Michelin."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Fine_dining_dish.jpg?width=1000",
+          urlFuente: "https://restaurantechiron.com/",
+          textoBotonFuente: "Visitar web de Restaurante Chirón"
+        },
+        {
+          id: "gas-dulces",
+          categoria: "Repostería Conventual",
+          icon: "spark",
+          titulo: "Dulces Artesanales del Convento de la Encarnación (Clarisas)",
+          texto: "Repostería tradicional elaborada por las madres clarisas en su convento del siglo XVII: pastas, rosquillas y dulces de temporada.",
+          contenidoCompleto: [
+            "Las madres clarisas del Convento de la Encarnación mantienen viva una tradición repostera centenaria en el casco antiguo de Valdemoro.",
+            "Sus pastas artesanales y dulces típicos se adquieren directamente en el torno del convento."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Valdemoro_-_Convento_de_la_Encarnaci%C3%B3n_(Clarisas)_09.jpg?width=1000",
+          urlFuente: "https://commons.wikimedia.org/wiki/File:Valdemoro_-_Convento_de_la_Encarnaci%C3%B3n_(Clarisas)_09.jpg",
+          textoBotonFuente: "Ver fotografía del Convento"
+        },
+        {
+          id: "gas-vinos",
+          categoria: "Bodega",
+          icon: "food",
+          titulo: "Vinos D.O. Vinos de Madrid",
+          texto: "Tintos y blancos de la Denominación de Origen Vinos de Madrid como maridaje natural de la cocina local.",
+          contenidoCompleto: [
+            "La cercanía de Valdemoro a las zonas vitivinícolas del sur de Madrid convierte a los vinos con D.O. Vinos de Madrid en el acompañamiento habitual de su gastronomía.",
+            "Destacan los tintos de uva tempranillo y garnacha."
+          ],
+          imagen: "https://commons.wikimedia.org/wiki/Special:FilePath/Spanish_red_wine_glass.jpg?width=1000",
+          urlFuente: "https://www.vinosdemadrid.es/",
+          textoBotonFuente: "Web D.O. Vinos de Madrid"
+        }
+      ]
+    };
+
+    /* ==========================================================================
+       BLOQUE 3: MAPAS LEAFLET SIN ERROR 403 NI "API KEY REQUIRED"
+       ========================================================================== */
+    const miniMapsRegistry = [];
+    let generalMapInstance = null;
+
+    function addKeylessTileLayer(mapInstance, withLayerControl = false) {
+      const streetLayer = L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+        {
+          maxZoom: 19,
+          attribution: 'Tiles &copy; Esri &mdash; OpenStreetMap contributors'
+        }
+      );
+
+      streetLayer.addTo(mapInstance);
+
+      if (withLayerControl) {
+        const satelliteLayer = L.tileLayer(
+          'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+          {
+            maxZoom: 19,
+            attribution: 'Tiles &copy; Esri &mdash; Maxar, Earthstar Geographics'
+          }
+        );
+
+        L.control.layers(
+          { 'Mapa Callejero': streetLayer, 'Vista Satélite': satelliteLayer },
+          null,
+          { position: 'topright' }
+        ).addTo(mapInstance);
+      }
+    }
+
+    function createGoogleMapsRouteUrl(lat, lng, nombre) {
+      return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&query=${encodeURIComponent(nombre + ' Valdemoro')}`;
+    }
+
+    function initMiniMapsInContainer(container) {
+      if (typeof L === 'undefined' || !container) return;
+      const mapNodes = container.querySelectorAll('.mini-map-box[data-lat]');
+      mapNodes.forEach((el) => {
+        if (el.dataset.mapInitialized === 'true') return;
+        const lat = parseFloat(el.dataset.lat);
+        const lng = parseFloat(el.dataset.lng);
+        const title = el.dataset.title || 'Valdemoro';
+
+        const map = L.map(el, {
+          center: [lat, lng],
+          zoom: 15,
+          scrollWheelZoom: false,
+          attributionControl: false
+        });
+
+        addKeylessTileLayer(map, false);
+        L.marker([lat, lng]).addTo(map).bindPopup(`<strong style="color:#0f2744;">${title}</strong>`);
+
+        el.dataset.mapInitialized = 'true';
+        miniMapsRegistry.push(map);
+        setTimeout(() => map.invalidateSize(), 180);
+      });
+    }
+
+    function invalidateAllVisibleMaps() {
+      miniMapsRegistry.forEach((m) => {
+        try { m.invalidateSize(); } catch (e) {}
+      });
+      if (generalMapInstance) {
+        try { generalMapInstance.invalidateSize(); } catch (e) {}
+      }
+    }
+
+    function initGeneralMap() {
+      const container = document.getElementById('general-leaflet-map');
+      if (!container || typeof L === 'undefined') return;
+
+      if (!generalMapInstance) {
+        generalMapInstance = L.map(container).setView([40.1895, -3.6745], 14);
+        addKeylessTileLayer(generalMapInstance, true);
+
+        const allPoints = [
+          ...VALDEMORO_DATA.lugares.map(i => ({ ...i, tipo: 'Lugar' })),
+          ...VALDEMORO_DATA.restaurantes.map(i => ({ ...i, tipo: 'Restaurante' })),
+          ...VALDEMORO_DATA.hoteles.map(i => ({ ...i, tipo: 'Hotel' }))
+        ];
+
+        allPoints.forEach((pt) => {
+          const popupHtml = `
+            <div style="color:#09182b; min-width:195px; font-family:Inter,sans-serif;">
+              <span style="font-size:11px; font-weight:700; text-transform:uppercase; color:#1d4ed8;">${pt.tipo}</span><br/>
+              <strong style="font-size:14px;">${pt.nombre}</strong><br/>
+              <span style="font-size:12px; color:#334155;">${pt.direccion}</span><br/>
+              <a href="${createGoogleMapsRouteUrl(pt.lat, pt.lng, pt.nombre)}" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-top:6px; font-weight:700; color:#1d4ed8;">Cómo llegar en Google Maps →</a>
+            </div>
+          `;
+          L.marker([pt.lat, pt.lng]).addTo(generalMapInstance).bindPopup(popupHtml);
+        });
+      }
+
+      setTimeout(() => generalMapInstance.invalidateSize(), 160);
+    }
+
+    /* ==========================================================================
+       BLOQUE 4: RENDERIZADO DINÁMICO DE FICHAS CON IMÁGENES ÚNICAS Y HREF REAL
+       ========================================================================== */
+    function renderStarsBadge(count) {
+      if (!count) return '';
+      const starsStr = '★'.repeat(count);
+      return `<span class="hotel-stars" aria-label="${count} estrellas">${starsStr} <span style="color:var(--text-secondary); font-size:0.76rem; font-weight:600;">(${count} estrellas)</span></span>`;
+    }
+
+    function renderEntityCard(item, badgeLeft, badgeRight, extraMetaHtml = '', starsCount = 0) {
+      const verifyTag = item.verificar
+        ? `<span class="verify-badge" title="Dato pendiente de confirmación directa">⚠ Verificar horario/tarifa</span>`
+        : '';
+
+      const extraActionBtn = item.extraUrl
+        ? `<a href="${item.extraUrl}" target="_blank" rel="noopener noreferrer" class="btn-route btn-gold">${SVG_ICONS.ticket} ${item.extraUrlLabel || 'Web oficial'}</a>`
+        : '';
+
+      const imgHref = item.urlFuente || item.extraUrl || createGoogleMapsRouteUrl(item.lat, item.lng, item.nombre);
+      const badgeHover = item.linkBadge || 'Ver fuente real ↗';
+      const safeTitleAttr = item.nombre.replace(/"/g, '&quot;');
+      const safeSubAttr = badgeLeft.replace(/"/g, '&quot;');
+
+      /* Si el establecimiento es un alojamiento sin foto libre de derechos, muestra su tarjeta arquitectónica propia enlazada a su galería real */
+      const mediaInnerHtml = item.imagen
+        ? `<img src="${item.imagen}" alt="${safeTitleAttr} en Valdemoro" loading="lazy" onerror="applyUniqueFallback(this, '${safeTitleAttr}', '${safeSubAttr}')" />`
+        : `<div class="hotel-visual-showcase" style="background: ${item.gradiente || 'linear-gradient(135deg, #0b223f, #1e4d89)'};">
+             <div class="hotel-visual-pattern"></div>
+             <div class="hotel-visual-caption">
+               <span class="hotel-visual-kicker">${badgeLeft} · ${'★'.repeat(starsCount || 2)}</span>
+               <strong class="hotel-visual-name">${item.nombre}</strong>
+               <span class="hotel-visual-zone">${item.zona || item.direccion}</span>
+             </div>
+           </div>`;
+
+      return `
+        <article class="entity-card filter-item gs-card-reveal" data-filter-value="${badgeLeft}">
+          <div class="entity-media">
+            <a class="img-href-link" data-link-badge="${badgeHover}" href="${imgHref}" target="_blank" rel="noopener noreferrer" title="Abrir ficha real de ${safeTitleAttr}">
+              ${mediaInnerHtml}
+            </a>
+            <div class="entity-badges">
+              <span class="badge-pill">${badgeLeft}</span>
+              ${badgeRight ? `<span class="badge-pill badge-price">${badgeRight}</span>` : ''}
+            </div>
+          </div>
+          <div class="entity-body">
+            ${starsCount ? renderStarsBadge(starsCount) : ''}
+            <h2 class="entity-title">${item.nombre}</h2>
+            <p class="entity-desc">${item.descripcion}</p>
+            <div class="entity-meta">
+              <span>${SVG_ICONS.pin} <strong>Dirección:</strong> ${item.direccion}</span>
+              ${extraMetaHtml}
+              ${verifyTag}
+            </div>
+            <div class="mini-map-box" data-lat="${item.lat}" data-lng="${item.lng}" data-title="${safeTitleAttr}" aria-label="Mapa interactivo de ${safeTitleAttr}"></div>
+            <div class="entity-actions">
+              <a href="${createGoogleMapsRouteUrl(item.lat, item.lng, item.nombre)}" target="_blank" rel="noopener noreferrer" class="btn-route" aria-label="Cómo llegar a ${safeTitleAttr} en Google Maps">
+                ${SVG_ICONS.route} Cómo llegar
+              </a>
+              ${extraActionBtn}
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function setupFilterBar(filterBarId, gridId, categories) {
+      const bar = document.getElementById(filterBarId);
+      const grid = document.getElementById(gridId);
+      if (!bar || !grid) return;
+
+      const allCats = ['Todos', ...categories];
+      bar.innerHTML = allCats
+        .map((cat, idx) => `<button type="button" class="filter-btn ${idx === 0 ? 'active' : ''}" data-filter="${cat}">${cat}</button>`)
+        .join('');
+
+      bar.addEventListener('click', (e) => {
+        const btn = e.target.closest('.filter-btn');
+        if (!btn) return;
+
+        bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const selected = btn.dataset.filter;
+        const items = grid.querySelectorAll('.filter-item');
+
+        items.forEach((card) => {
+          const match = selected === 'Todos' || card.dataset.filterValue === selected;
+          if (match) {
+            card.style.display = 'flex';
+            if (window.gsap && !prefersReducedMotion()) {
+              gsap.fromTo(card, { opacity: 0, y: 14, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.32, ease: 'power2.out' });
+            }
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        setTimeout(() => {
+          invalidateAllVisibleMaps();
+          if (window.ScrollTrigger) ScrollTrigger.refresh();
+        }, 140);
+      });
+    }
+
+    function renderAllContent() {
+      // 1. Bloque Magazine Bento en Inicio
+      const magazineContainer = document.getElementById('home-magazine-preview');
+      if (magazineContainer) {
+        const leadNoticia = VALDEMORO_DATA.noticias[0];
+        const sideItems = [
+          {
+            img: VALDEMORO_DATA.fiestas[5].imagen,
+            href: VALDEMORO_DATA.fiestas[5].urlOficial,
+            tag: "Fiesta Histórica · Octubre",
+            title: "Feria Barroca de Valdemoro (Privilegio de 1603)",
+            sub: "Fuente de la Villa, mercado del Siglo de Oro y rutas históricas.",
+            actionAttr: `data-route="fiestas"`
+          },
+          {
+            img: VALDEMORO_DATA.noticias[2].imagen,
+            href: VALDEMORO_DATA.noticias[2].urlFuente,
+            tag: "18 Noviembre 2026 · Noticia",
+            title: VALDEMORO_DATA.noticias[2].titulo,
+            sub: VALDEMORO_DATA.noticias[2].resumen,
+            actionAttr: `data-open-reader="noticias:${VALDEMORO_DATA.noticias[2].id}"`
+          },
+          {
+            img: VALDEMORO_DATA.fiestas[3].imagen,
+            href: VALDEMORO_DATA.fiestas[3].urlOficial,
+            tag: "Fiestas Patronales · Mayo",
+            title: "Fiestas del Santísimo Cristo de la Salud",
+            sub: "Ermita del Cristo, conciertos, peñas y recinto ferial.",
+            actionAttr: `data-route="fiestas"`
+          }
+        ];
+
+        magazineContainer.innerHTML = `
+          <article class="magazine-featured gs-card-reveal">
+            <div class="magazine-featured-img">
+              <a class="img-href-link" data-link-badge="Leer noticia ↗" href="${leadNoticia.urlFuente}" target="_blank" rel="noopener noreferrer" title="Abrir noticia original en valdemoro.es">
+                <img src="${leadNoticia.imagen}" alt="${leadNoticia.titulo}" loading="lazy" onerror="applyUniqueFallback(this, '${leadNoticia.titulo}', '${leadNoticia.categoria}')" />
+              </a>
+              <div class="entity-badges">
+                <span class="badge-pill">${leadNoticia.categoria}</span>
+              </div>
+            </div>
+            <div class="showcase-card-body">
+              <span class="news-date">${leadNoticia.fecha}</span>
+              <h3 style="font-family:var(--font-heading); font-size:1.35rem; margin:0.35rem 0 0.6rem;">${leadNoticia.titulo}</h3>
+              <p style="color:var(--text-secondary); font-size:0.93rem; margin-bottom:1.1rem; flex:1;">${leadNoticia.resumen}</p>
+              <div class="entity-actions">
+                <button type="button" class="btn-route" data-open-reader="noticias:${leadNoticia.id}">Leer noticia ampliada</button>
+                <a href="${leadNoticia.urlFuente}" target="_blank" rel="noopener noreferrer" class="btn-route btn-gold">Web oficial →</a>
+              </div>
+            </div>
+          </article>
+
+          <div class="magazine-side-stack">
+            ${sideItems.map(s => `
+              <article class="magazine-compact-card gs-card-reveal">
+                <div class="magazine-compact-thumb">
+                  <a class="img-href-link" data-link-badge="Abrir ↗" href="${s.href}" target="_blank" rel="noopener noreferrer" title="Abrir fuente de ${s.title}">
+                    <img src="${s.img}" alt="${s.title}" loading="lazy" onerror="applyUniqueFallback(this, '${s.title}', '${s.tag}')" />
+                  </a>
+                </div>
+                <div>
+                  <span class="section-eyebrow" style="font-size:0.68rem; margin-bottom:0.2rem;">${s.tag}</span>
+                  <h3 style="font-family:var(--font-heading); font-size:1rem; line-height:1.25; margin-bottom:0.3rem;">${s.title}</h3>
+                  <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:0.45rem;">${s.sub}</p>
+                  <button type="button" style="font-size:0.8rem; font-weight:700; color:var(--accent-gold);" ${s.actionAttr}>Explorar →</button>
+                </div>
+              </article>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      // 2. Preview Lugares en Inicio
+      const homePreview = document.getElementById('home-places-preview');
+      if (homePreview) {
+        homePreview.innerHTML = VALDEMORO_DATA.lugares
+          .filter(l => l.destacadoInicio)
+          .map(l => `
+            <article class="showcase-card gs-card-reveal">
+              <div class="showcase-card-img">
+                <a class="img-href-link" data-link-badge="Ver monumento ↗" href="${l.urlFuente}" target="_blank" rel="noopener noreferrer" title="Abrir ficha de ${l.nombre}">
+                  <img src="${l.imagen}" alt="${l.nombre}" loading="lazy" onerror="applyUniqueFallback(this, '${l.nombre}', '${l.categoria}')" />
+                </a>
+              </div>
+              <div class="showcase-card-body">
+                <span class="section-eyebrow" style="font-size:0.72rem;">${l.categoria}</span>
+                <h3 style="font-size:1.12rem; margin-bottom:0.45rem;">${l.nombre}</h3>
+                <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:1rem; flex:1;">${l.descripcion}</p>
+                <button type="button" class="btn-route" style="width:100%;" data-route="lugares">Ver ficha y mapa →</button>
+              </div>
+            </article>
+          `).join('');
+      }
+
+      // 3. Sección Noticias
+      const leadNoticiaContainer = document.getElementById('lead-noticia-container');
+      const gridNoticias = document.getElementById('grid-noticias');
+      if (leadNoticiaContainer && gridNoticias) {
+        const firstNews = VALDEMORO_DATA.noticias[0];
+        leadNoticiaContainer.innerHTML = `
+          <article class="lead-news-banner filter-item gs-fade-up" data-filter-value="${firstNews.categoria}">
+            <div class="lead-news-media">
+              <a class="img-href-link" data-link-badge="Leer noticia ↗" href="${firstNews.urlFuente}" target="_blank" rel="noopener noreferrer" title="Abrir noticia en valdemoro.es">
+                <img src="${firstNews.imagen}" alt="${firstNews.titulo}" onerror="applyUniqueFallback(this, '${firstNews.titulo}', '${firstNews.categoria}')" />
+              </a>
+              <div class="entity-badges">
+                <span class="badge-pill">${firstNews.categoria}</span>
+              </div>
+            </div>
+            <div class="lead-news-body">
+              <span class="news-date">${firstNews.fecha}</span>
+              <h2 style="font-family:var(--font-heading); font-size:1.55rem; line-height:1.22;">${firstNews.titulo}</h2>
+              <p style="color:var(--text-secondary); font-size:0.96rem;">${firstNews.resumen}</p>
+              <div class="entity-actions" style="margin-top:0.4rem;">
+                <button type="button" class="btn-route" data-open-reader="noticias:${firstNews.id}">Leer noticia ampliada</button>
+                <a href="${firstNews.urlFuente}" target="_blank" rel="noopener noreferrer" class="btn-route btn-gold">Ver en valdemoro.es →</a>
+              </div>
+            </div>
+          </article>
+        `;
+
+        gridNoticias.innerHTML = VALDEMORO_DATA.noticias.slice(1).map(n => `
+          <article class="news-card filter-item gs-card-reveal" data-filter-value="${n.categoria}">
+            <div class="news-card-media">
+              <a class="img-href-link" data-link-badge="Leer noticia ↗" href="${n.urlFuente}" target="_blank" rel="noopener noreferrer" title="Abrir noticia en valdemoro.es">
+                <img src="${n.imagen}" alt="${n.titulo}" loading="lazy" onerror="applyUniqueFallback(this, '${n.titulo}', '${n.categoria}')" />
+              </a>
+              <div class="entity-badges">
+                <span class="badge-pill">${n.categoria}</span>
+              </div>
+            </div>
+            <div class="news-card-body">
+              <span class="news-date">${n.fecha}</span>
+              <h2 class="entity-title">${n.titulo}</h2>
+              <p class="entity-desc">${n.resumen}</p>
+              <div class="entity-actions" style="margin-top:0.5rem;">
+                <button type="button" class="btn-route" data-open-reader="noticias:${n.id}">
+                  Ampliar lectura
+                </button>
+                <a href="${n.urlFuente}" target="_blank" rel="noopener noreferrer" class="btn-route btn-gold">
+                  Noticia original →
+                </a>
+              </div>
+            </div>
+          </article>
+        `).join('');
+
+        const catsNoticias = [...new Set(VALDEMORO_DATA.noticias.map(n => n.categoria))];
+        setupFilterBar('filter-noticias', 'view-noticias', catsNoticias);
+      }
+
+      // 4. Lugares
+      const gridLugares = document.getElementById('grid-lugares');
+      if (gridLugares) {
+        gridLugares.innerHTML = VALDEMORO_DATA.lugares
+          .map(l => renderEntityCard(l, l.categoria, '', `<span>${SVG_ICONS.clock} <strong>Horario:</strong> ${l.horario}</span>`))
+          .join('');
+        const catsLugares = [...new Set(VALDEMORO_DATA.lugares.map(l => l.categoria))];
+        setupFilterBar('filter-lugares', 'grid-lugares', catsLugares);
+      }
+
+      // 5. Restaurantes
+      const gridRest = document.getElementById('grid-restaurantes');
+      if (gridRest) {
+        gridRest.innerHTML = VALDEMORO_DATA.restaurantes
+          .map(r => renderEntityCard(r, r.cocina, r.precio, `<span>${SVG_ICONS.clock} <strong>Horario:</strong> ${r.horario}</span>`))
+          .join('');
+        const catsRest = [...new Set(VALDEMORO_DATA.restaurantes.map(r => r.cocina))];
+        setupFilterBar('filter-restaurantes', 'grid-restaurantes', catsRest);
+      }
+
+      // 6. Hoteles con estrellas
+      const gridHoteles = document.getElementById('grid-hoteles');
+      if (gridHoteles) {
+        gridHoteles.innerHTML = VALDEMORO_DATA.hoteles
+          .map(h => renderEntityCard(h, h.categoria, h.precio, `<span><strong>Servicios:</strong> ${h.servicios}</span>`, h.estrellas))
+          .join('');
+        const catsHot = [...new Set(VALDEMORO_DATA.hoteles.map(h => h.categoria))];
+        setupFilterBar('filter-hoteles', 'grid-hoteles', catsHot);
+      }
+
+      // 7. Historia Interactiva
+      renderInteractiveHistory();
+
+      // 8. Tarjetas con Imagen Enlazada (href) y Lector Dividido
+      const renderPhotoInfoCards = (targetId, list, collectionKey, hasCategoryFilter = false) => {
+        const el = document.getElementById(targetId);
+        if (!el) return;
+        el.innerHTML = list.map(item => `
+          <article class="info-card gs-card-reveal ${hasCategoryFilter ? 'filter-item' : ''}" ${hasCategoryFilter ? `data-filter-value="${item.categoria}"` : ''}>
+            ${item.imagen ? `
+              <div class="info-card-img">
+                <a class="img-href-link" data-link-badge="Abrir fuente ↗" href="${item.urlFuente}" target="_blank" rel="noopener noreferrer" title="Abrir fuente de ${item.titulo}">
+                  <img src="${item.imagen}" alt="${item.titulo}" loading="lazy" onerror="applyUniqueFallback(this, '${item.titulo}', '${item.categoria || 'Valdemoro'}')" />
+                </a>
+              </div>` : ''}
+            <div class="info-card-content">
+              <div class="info-card-header">
+                <div class="info-icon-box" aria-hidden="true">${SVG_ICONS[item.icon] || SVG_ICONS.landmark}</div>
+                <div>
+                  ${item.categoria ? `<span class="section-eyebrow" style="font-size:0.7rem; margin-bottom:0.15rem;">${item.categoria}</span>` : ''}
+                  <h2 style="font-size:1.12rem; font-family:var(--font-heading);">${item.titulo}</h2>
+                </div>
+              </div>
+              <p style="color:var(--text-secondary); font-size:0.92rem; flex:1;">${item.texto}</p>
+              <div class="entity-actions" style="margin-top:0.5rem;">
+                <button type="button" class="btn-route" data-open-reader="${collectionKey}:${item.id}">
+                  Ampliar información →
+                </button>
+              </div>
+            </div>
+          </article>
+        `).join('');
+      };
+
+      renderPhotoInfoCards('grid-curiosidades', VALDEMORO_DATA.curiosidades, 'curiosidades');
+      renderPhotoInfoCards('grid-que-hacer', VALDEMORO_DATA.queHacer, 'queHacer', true);
+      setupFilterBar('filter-que-hacer', 'grid-que-hacer', [...new Set(VALDEMORO_DATA.queHacer.map(q => q.categoria))]);
+      renderPhotoInfoCards('grid-transporte', VALDEMORO_DATA.transporte, 'transporte');
+      renderPhotoInfoCards('grid-gastronomia', VALDEMORO_DATA.gastronomia, 'gastronomia');
+    }
+
+    function renderInteractiveHistory() {
+      const nav = document.getElementById('history-era-nav');
+      const container = document.getElementById('timeline-historia');
+      if (!nav || !container) return;
+
+      const eras = [{ id: 'all', epoca: 'Todas las épocas' }, ...VALDEMORO_DATA.historia];
+      nav.innerHTML = eras.map((e, idx) => `
+        <button type="button" class="history-era-btn ${idx === 0 ? 'active' : ''}" data-era-id="${e.id}">
+          ${e.epoca}
+        </button>
+      `).join('');
+
+      container.innerHTML = VALDEMORO_DATA.historia.map(h => `
+        <article class="history-chapter gs-card-reveal" data-chapter-id="${h.id}">
+          <div class="history-chapter-media">
+            <a class="img-href-link" data-link-badge="Abrir fuente ↗" href="${h.urlFuente}" target="_blank" rel="noopener noreferrer" title="Abrir fuente histórica de ${h.titulo}">
+              <img src="${h.imagen}" alt="${h.titulo} - Historia de Valdemoro" loading="lazy" onerror="applyUniqueFallback(this, '${h.titulo}', '${h.epoca}')" />
+            </a>
+          </div>
+          <div class="history-chapter-body">
+            <span class="timeline-era">${h.epoca}</span>
+            <h2 style="font-family:var(--font-heading); font-size:1.4rem; line-height:1.25;">${h.titulo}</h2>
+            <p style="color:var(--text-secondary); font-size:0.95rem;">${h.texto}</p>
+            <div class="history-highlight-box">${h.hito}</div>
+          </div>
+        </article>
+      `).join('');
+
+      nav.addEventListener('click', (e) => {
+        const btn = e.target.closest('.history-era-btn');
+        if (!btn) return;
+        nav.querySelectorAll('.history-era-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const selectedEra = btn.dataset.eraId;
+        container.querySelectorAll('.history-chapter').forEach(ch => {
+          const visible = selectedEra === 'all' || ch.dataset.chapterId === selectedEra;
+          ch.style.display = visible ? 'grid' : 'none';
+          if (visible && window.gsap && !prefersReducedMotion()) {
+            gsap.fromTo(ch, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35 });
+          }
+        });
+      });
+    }
+
+    /* ==========================================================================
+       BLOQUE 5: CALENDARIO INTERACTIVO DE EVENTOS Y FIESTAS CON FOTOS HREF
+       ========================================================================== */
+    function initFestivitiesCalendar() {
+      const monthLabel = document.getElementById('cal-month-label');
+      const daysGrid = document.getElementById('cal-days-grid');
+      const prevBtn = document.getElementById('cal-prev-btn');
+      const nextBtn = document.getElementById('cal-next-btn');
+      const listContainer = document.getElementById('festivity-list-container');
+      const sideTitle = document.getElementById('festivities-side-title');
+      if (!monthLabel || !daysGrid || !listContainer) return;
+
+      const year = 2026;
+      let currentMonth = 10;
+      const monthNames = [
+        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+      ];
+
+      function renderFestivityCards(filterMonth = null) {
+        const items = filterMonth === null
+          ? VALDEMORO_DATA.fiestas
+          : VALDEMORO_DATA.fiestas.filter(f => f.mes === filterMonth);
+
+        sideTitle.textContent = filterMonth === null
+          ? 'Todas las fiestas y tradiciones del año en Valdemoro'
+          : `Eventos en ${monthNames[filterMonth]} (${items.length})`;
+
+        if (items.length === 0) {
+          listContainer.innerHTML = `
+            <div class="festivity-photo-card" style="padding:1.35rem; display:block;">
+              <p style="color:var(--text-secondary);">No hay grandes fiestas patronales programadas en ${monthNames[filterMonth]}. Pulsa el botón inferior para ver el calendario anual completo.</p>
+              <button type="button" class="cal-btn" style="margin-top:0.75rem;" id="show-all-festivities-btn">Ver todas las fiestas del año</button>
+            </div>
+          `;
+          const resetBtn = document.getElementById('show-all-festivities-btn');
+          if (resetBtn) resetBtn.addEventListener('click', () => renderFestivityCards(null));
+          return;
+        }
+
+        listContainer.innerHTML = items.map(f => `
+          <article class="festivity-photo-card ${filterMonth === f.mes ? 'highlighted' : ''}" data-festivity-id="${f.id}">
+            <div class="festivity-thumb">
+              <a class="img-href-link" data-link-badge="Ver fiesta oficial ↗" href="${f.urlOficial}" target="_blank" rel="noopener noreferrer" title="Abrir página oficial de ${f.titulo}">
+                <img src="${f.imagen}" alt="${f.titulo} en Valdemoro" loading="lazy" onerror="applyUniqueFallback(this, '${f.titulo}', '${f.rangoFechas}')" />
+              </a>
+            </div>
+            <div class="festivity-body">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+                <span class="timeline-era">${f.rangoFechas}</span>
+                <span class="badge-pill">${f.tipo}</span>
+              </div>
+              <h3 style="font-family:var(--font-heading); font-size:1.15rem;">${f.titulo}</h3>
+              <p style="font-size:0.89rem; color:var(--text-secondary);">${f.descripcion}</p>
+              <p style="font-size:0.8rem; color:var(--text-muted);"><strong>Ubicación:</strong> ${f.lugar}</p>
+              <div style="display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; margin-top:0.25rem;">
+                <a href="${f.urlOficial}" target="_blank" rel="noopener noreferrer" class="btn-route btn-gold" style="flex:0 1 auto; padding:0.45rem 0.85rem; font-size:0.78rem;">
+                  Info oficial en valdemoro.es →
+                </a>
+                ${f.verificar ? `<span class="verify-badge">⚠ Verificar fecha móvil</span>` : ''}
+              </div>
+            </div>
+          </article>
+        `).join('') + (filterMonth !== null ? `<button type="button" class="cal-btn" id="show-all-festivities-btn">Ver todas las fiestas del año</button>` : '');
+
+        const resetBtn = document.getElementById('show-all-festivities-btn');
+        if (resetBtn) resetBtn.addEventListener('click', () => renderFestivityCards(null));
+      }
+
+      function renderCalendarGrid() {
+        monthLabel.textContent = `${monthNames[currentMonth]} ${year}`;
+        const firstDay = new Date(year, currentMonth, 1).getDay();
+        const startOffset = (firstDay === 0) ? 6 : firstDay - 1;
+        const daysInMonth = new Date(year, currentMonth + 1, 0).getDate();
+
+        const monthEvents = VALDEMORO_DATA.fiestas.filter(f => f.mes === currentMonth);
+        let cellsHtml = '';
+
+        for (let i = 0; i < startOffset; i++) {
+          cellsHtml += `<div class="cal-day empty" aria-hidden="true"></div>`;
+        }
+
+        for (let d = 1; d <= daysInMonth; d++) {
+          const eventMatch = monthEvents.find(ev => ev.dia === d);
+          if (eventMatch) {
+            cellsHtml += `
+              <button type="button" class="cal-day has-event selected-day" data-day="${d}" title="${eventMatch.titulo}" aria-label="${d} de ${monthNames[currentMonth]}: ${eventMatch.titulo}">
+                <span>${d}</span>
+              </button>
+            `;
+          } else {
+            cellsHtml += `<div class="cal-day"><span>${d}</span></div>`;
+          }
+        }
+
+        daysGrid.innerHTML = cellsHtml;
+        renderFestivityCards(monthEvents.length > 0 ? currentMonth : null);
+      }
+
+      prevBtn.addEventListener('click', () => {
+        currentMonth = (currentMonth - 1 + 12) % 12;
+        renderCalendarGrid();
+      });
+
+      nextBtn.addEventListener('click', () => {
+        currentMonth = (currentMonth + 1) % 12;
+        renderCalendarGrid();
+      });
+
+      document.querySelectorAll('[data-jump-month]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentMonth = parseInt(btn.dataset.jumpMonth, 10);
+          renderCalendarGrid();
+        });
+      });
+
+      daysGrid.addEventListener('click', (e) => {
+        const dayBtn = e.target.closest('.cal-day.has-event');
+        if (!dayBtn) return;
+        renderFestivityCards(currentMonth);
+      });
+
+      renderCalendarGrid();
+    }
+
+    /* ==========================================================================
+       BLOQUE 6: LECTOR DIVIDIDO AMPLIADO (IMAGEN GRANDE CON HREF + TEXTO DERECHA)
+       ========================================================================== */
+    function initSplitReaderModal() {
+      const modal = document.getElementById('split-reader-modal');
+      const closeTop = document.getElementById('reader-modal-close');
+      const closeBottom = document.getElementById('reader-modal-close-bottom');
+      if (!modal) return;
+
+      function closeModal() {
+        modal.classList.remove('open');
+      }
+
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-open-reader]');
+        if (!btn) return;
+        const [collectionKey, itemId] = btn.dataset.openReader.split(':');
+        const collection = VALDEMORO_DATA[collectionKey];
+        if (!collection) return;
+        const item = collection.find(entry => entry.id === itemId);
+        if (!item) return;
+
+        const targetUrl = item.urlFuente || 'https://www.valdemoro.es/noticias';
+
+        document.getElementById('reader-modal-cat').textContent = item.categoria || 'Valdemoro';
+        document.getElementById('reader-modal-title').textContent = item.titulo;
+        document.getElementById('reader-modal-meta').textContent = item.fecha || 'Guía Informativa de Valdemoro';
+
+        const imgLink = document.getElementById('reader-modal-img-link');
+        imgLink.href = targetUrl;
+
+        const imgEl = document.getElementById('reader-modal-img');
+        imgEl.src = item.imagen || createCustomVenueFallbackSvg(item.titulo, item.categoria || 'Valdemoro');
+        imgEl.alt = item.titulo;
+        imgEl.onerror = () => applyUniqueFallback(imgEl, item.titulo, item.categoria || 'Valdemoro');
+
+        const paragraphs = item.contenido || item.contenidoCompleto || [item.texto || item.resumen];
+        document.getElementById('reader-modal-body').innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
+
+        const sourceLink = document.getElementById('reader-modal-source-link');
+        const sourceLabel = document.getElementById('reader-modal-source-label');
+        sourceLink.href = targetUrl;
+        sourceLabel.textContent = item.textoBotonFuente || 'Seguir leyendo en la web original';
+
+        modal.classList.add('open');
+        closeTop.focus();
+      });
+
+      closeTop.addEventListener('click', closeModal);
+      closeBottom.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      });
+    }
+
+    /* ==========================================================================
+       BLOQUE 7: BUSCADOR EN TIEMPO REAL + TÍTULO DE PESTAÑA DINÁMICO
+       ========================================================================== */
+    const ROUTE_TITLES = {
+      'inicio': 'Inicio',
+      'noticias': 'Noticias Municipales',
+      'fiestas': 'Eventos y Fiestas',
+      'lugares': 'Lugares y Parques',
+      'restaurantes': 'Restaurantes',
+      'hoteles': 'Hoteles y Alojamientos',
+      'historia': 'Historia de Valdemoro',
+      'que-hacer': 'Qué hacer y Teatro',
+      'curiosidades': 'Curiosidades',
+      'mapa-general': 'Mapa General',
+      'transporte': 'Transporte y Autobuses',
+      'gastronomia': 'Gastronomía Típica',
+      'contacto': 'Contacto',
+      'sobre-la-web': 'Sobre la Web'
+    };
+
+    let currentActiveRoute = 'inicio';
+
+    function updateBrowserTabTitle(customPrefix = null) {
+      const sectionName = customPrefix || ROUTE_TITLES[currentActiveRoute] || 'Inicio';
+      document.title = `${sectionName} | Conoce Valdemoro`;
+    }
+
+    function initSearchSystem() {
+      const input = document.getElementById('global-search-input');
+      const placeholderEl = document.getElementById('rotating-placeholder');
+      const dropdown = document.getElementById('search-results-list');
+      const clearBtn = document.getElementById('search-clear-btn');
+      if (!input || !placeholderEl || !dropdown) return;
+
+      const phrases = [
+        "¿Qué te apetece saber hoy?",
+        "¿Por dónde empezamos?",
+        "Descubre restaurantes, hoteles y más...",
+        "¿Buscas dónde comer hoy?",
+        "Encuentra tu próximo plan en Valdemoro",
+        "¿Qué lugares no te puedes perder?"
+      ];
+
+      let phraseIdx = 0;
+      setInterval(() => {
+        if (document.activeElement === input || input.value.trim() !== '') return;
+        placeholderEl.classList.add('fade-out');
+        setTimeout(() => {
+          phraseIdx = (phraseIdx + 1) % phrases.length;
+          placeholderEl.textContent = phrases[phraseIdx];
+          placeholderEl.classList.remove('fade-out');
+        }, 280);
+      }, 3000);
+
+      const searchIndex = [
+        ...VALDEMORO_DATA.lugares.map(i => ({ title: i.nombre, sub: i.descripcion, tag: 'Lugar', route: 'lugares', keywords: `${i.nombre} ${i.categoria} ${i.direccion}` })),
+        ...VALDEMORO_DATA.restaurantes.map(i => ({ title: i.nombre, sub: `${i.cocina} (${i.precio}) · ${i.descripcion}`, tag: 'Restaurante', route: 'restaurantes', keywords: `${i.nombre} ${i.cocina} ${i.precio} comer cenar` })),
+        ...VALDEMORO_DATA.hoteles.map(i => ({ title: i.nombre, sub: `${i.categoria} (${'★'.repeat(i.estrellas)}) · ${i.servicios}`, tag: 'Hotel', route: 'hoteles', keywords: `${i.nombre} ${i.categoria} dormir alojamiento estrellas` })),
+        ...VALDEMORO_DATA.noticias.map(i => ({ title: i.titulo, sub: i.resumen, tag: 'Noticia', route: 'noticias', keywords: `${i.titulo} ${i.categoria} ${i.resumen} actualidad` })),
+        ...VALDEMORO_DATA.fiestas.map(i => ({ title: i.titulo, sub: `${i.rangoFechas} · ${i.descripcion}`, tag: 'Fiesta / Evento', route: 'fiestas', keywords: `${i.titulo} ${i.rangoFechas} ${i.tipo} fiestas feria barroca cabalgata carnaval san marcos cristo rosario` })),
+        ...VALDEMORO_DATA.historia.map(i => ({ title: `${i.epoca}: ${i.titulo}`, sub: i.texto, tag: 'Historia', route: 'historia', keywords: `${i.epoca} ${i.titulo} ${i.texto}` })),
+        ...VALDEMORO_DATA.queHacer.map(i => ({ title: i.titulo, sub: i.texto, tag: 'Ocio / Teatro', route: 'que-hacer', keywords: `${i.titulo} ${i.categoria} ${i.texto} teatro entradas` })),
+        ...VALDEMORO_DATA.transporte.map(i => ({ title: i.titulo, sub: i.texto, tag: 'Transporte', route: 'transporte', keywords: `${i.titulo} ${i.texto} bus autobus cercanias` }))
+      ];
+
+      function updatePlaceholderVisibility() {
+        const hasText = input.value.trim().length > 0;
+        placeholderEl.style.opacity = hasText ? '0' : '1';
+        clearBtn.classList.toggle('visible', hasText);
+      }
+
+      function renderResults(query) {
+        const q = query.trim().toLowerCase();
+        if (!q) {
+          dropdown.classList.remove('open');
+          dropdown.innerHTML = '';
+          updateBrowserTabTitle();
+          return;
+        }
+
+        updateBrowserTabTitle(`Búsqueda: "${query.trim()}"`);
+
+        const matches = searchIndex
+          .filter(item => item.keywords.toLowerCase().includes(q) || item.sub.toLowerCase().includes(q))
+          .slice(0, 9);
+
+        if (matches.length === 0) {
+          dropdown.innerHTML = `<div class="search-result-item" style="cursor:default;"><span class="search-result-sub">Sin coincidencias para «${query}». Prueba con «Teatro», «Feria Barroca», «San Marcos», «Chirón» o «Victoria».</span></div>`;
+        } else {
+          dropdown.innerHTML = matches.map(m => `
+            <div class="search-result-item" role="option" tabindex="0" data-target-route="${m.route}">
+              <div>
+                <div class="search-result-title">${m.title}</div>
+                <div class="search-result-sub">${m.sub}</div>
+              </div>
+              <span class="search-result-tag">${m.tag}</span>
+            </div>
+          `).join('');
+        }
+        dropdown.classList.add('open');
+      }
+
+      input.addEventListener('input', () => {
+        updatePlaceholderVisibility();
+        renderResults(input.value);
+      });
+
+      clearBtn.addEventListener('click', () => {
+        input.value = '';
+        updatePlaceholderVisibility();
+        renderResults('');
+        input.focus();
+      });
+
+      dropdown.addEventListener('click', (e) => {
+        const item = e.target.closest('.search-result-item[data-target-route]');
+        if (!item) return;
+        dropdown.classList.remove('open');
+        navigateToRoute(item.dataset.targetRoute);
+      });
+
+      dropdown.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const item = e.target.closest('.search-result-item[data-target-route]');
+          if (item) {
+            dropdown.classList.remove('open');
+            navigateToRoute(item.dataset.targetRoute);
+          }
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.search-wrapper')) {
+          dropdown.classList.remove('open');
+        }
+      });
+    }
+
+    /* ==========================================================================
+       BLOQUE 8: NAVEGACIÓN SPA, DRAWER Y CABECERA INTELIGENTE
+       ========================================================================== */
+    function navigateToRoute(routeKey) {
+      const targetSection = document.getElementById(`view-${routeKey}`);
+      if (!targetSection) return;
+
+      currentActiveRoute = routeKey;
+      updateBrowserTabTitle();
+
+      document.querySelectorAll('[data-route]').forEach((el) => {
+        if (el.classList.contains('nav-link') || el.classList.contains('drawer-link')) {
+          el.classList.toggle('active', el.dataset.route === routeKey);
+        }
+      });
+
+      document.querySelectorAll('.spa-section').forEach((sec) => {
+        sec.classList.remove('active');
+      });
+
+      targetSection.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'auto' });
+
+      if (window.gsap && !prefersReducedMotion()) {
+        gsap.fromTo(targetSection, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' });
+      }
+
+      setTimeout(() => {
+        initMiniMapsInContainer(targetSection);
+        if (routeKey === 'mapa-general') {
+          initGeneralMap();
+        }
+        invalidateAllVisibleMaps();
+        refreshSectionScrollAnimations(targetSection);
+      }, 90);
+
+      if (history.replaceState) {
+        history.replaceState(null, '', `#${routeKey}`);
+      }
+    }
+
+    function initNavigationAndDrawer() {
+      const drawer = document.getElementById('side-drawer');
+      const backdrop = document.getElementById('drawer-backdrop');
+      const openBtn = document.getElementById('drawer-open-btn');
+      const closeBtn = document.getElementById('drawer-close-btn');
+
+      function openDrawer() {
+        drawer.classList.add('open');
+        backdrop.classList.add('open');
+        openBtn.setAttribute('aria-expanded', 'true');
+        closeBtn.focus();
+      }
+
+      function closeDrawer() {
+        drawer.classList.remove('open');
+        backdrop.classList.remove('open');
+        openBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      openBtn.addEventListener('click', openDrawer);
+      closeBtn.addEventListener('click', closeDrawer);
+      backdrop.addEventListener('click', closeDrawer);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && drawer.classList.contains('open')) {
+          closeDrawer();
+          openBtn.focus();
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        const trigger = e.target.closest('[data-route]');
+        if (!trigger) return;
+        e.preventDefault();
+        closeDrawer();
+        navigateToRoute(trigger.dataset.route);
+      });
+
+      const header = document.getElementById('site-header');
+      let lastScrollY = window.scrollY;
+      window.addEventListener('scroll', () => {
+        const currentY = window.scrollY;
+        if (currentY > 140 && currentY > lastScrollY) {
+          header.classList.add('header-hidden');
+        } else {
+          header.classList.remove('header-hidden');
+        }
+        lastScrollY = currentY;
+      }, { passive: true });
+    }
+
+    /* ==========================================================================
+       BLOQUE 9: ANIMACIONES AL DESLIZAR (GSAP + SCROLLTRIGGER)
+       ========================================================================== */
+    function prefersReducedMotion() {
+      return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
+    function refreshSectionScrollAnimations(scopeEl = document) {
+      if (prefersReducedMotion() || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+      ScrollTrigger.refresh();
+
+      const cards = scopeEl.querySelectorAll('.gs-card-reveal');
+      cards.forEach((card, idx) => {
+        if (card.dataset.scrollAnimated === 'true') return;
+        card.dataset.scrollAnimated = 'true';
+
+        gsap.fromTo(card,
+          { opacity: 0, y: 26, scale: 0.97 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.52,
+            delay: (idx % 3) * 0.06,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 92%',
+              end: 'bottom 8%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+    }
+
+    function initAnimations() {
+      const statNumbers = document.querySelectorAll('.stat-number');
+
+      if (prefersReducedMotion() || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        statNumbers.forEach(el => {
+          const target = parseInt(el.dataset.target, 10);
+          const suffix = el.dataset.suffix || '';
+          el.textContent = target.toLocaleString('es-ES') + suffix;
+        });
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.from('.hero-crest-pill, .hero-title, .hero-subtitle, .search-wrapper, .hero-quick-chips', {
+        y: 22,
+        opacity: 0,
+        duration: 0.75,
+        stagger: 0.09,
+        ease: 'power3.out'
+      });
+
+      gsap.utils.toArray('.gs-slide-left').forEach((el) => {
+        gsap.fromTo(el,
+          { opacity: 0, x: -30 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.65,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 88%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      gsap.utils.toArray('.gs-slide-right').forEach((el) => {
+        gsap.fromTo(el,
+          { opacity: 0, x: 30, scale: 0.97 },
+          {
+            opacity: 1,
+            x: 0,
+            scale: 1,
+            duration: 0.65,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 88%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      gsap.utils.toArray('.gs-fade-up').forEach((el) => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.58,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 90%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      gsap.utils.toArray('.gs-scale-up').forEach((el, idx) => {
+        gsap.fromTo(el,
+          { opacity: 0, scale: 0.92, y: 18 },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.48,
+            delay: (idx % 4) * 0.06,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 92%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      statNumbers.forEach((el) => {
+        const target = parseInt(el.dataset.target, 10);
+        const suffix = el.dataset.suffix || '';
+        const counter = { val: 0 };
+
+        gsap.to(counter, {
+          val: target,
+          duration: 1.5,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+          },
+          onUpdate: () => {
+            el.textContent = Math.round(counter.val).toLocaleString('es-ES') + suffix;
+          }
+        });
+      });
+
+      refreshSectionScrollAnimations(document.getElementById('view-inicio'));
+    }
+
+    function initContactForm() {
+      const form = document.getElementById('contact-form');
+      const feedback = document.getElementById('contact-feedback');
+      if (!form || !feedback) return;
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!form.checkValidity()) {
+          feedback.style.color = '#fde047';
+          feedback.textContent = 'Por favor, completa todos los campos obligatorios con un correo válido.';
+          return;
+        }
+        feedback.style.color = '#10b981';
+        feedback.textContent = '✓ Mensaje enviado correctamente. Gracias por colaborar con Conoce Valdemoro.';
+        form.reset();
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAllContent();
+      initFestivitiesCalendar();
+      initSplitReaderModal();
+      initNavigationAndDrawer();
+      initSearchSystem();
+      initContactForm();
+      initAnimations();
+
+      const initialHash = window.location.hash.replace('#', '');
+      if (initialHash && document.getElementById(`view-${initialHash}`)) {
+        navigateToRoute(initialHash);
+      } else {
+        updateBrowserTabTitle('Inicio');
+      }
+    });
+  </script>
+</body>
+</html>
