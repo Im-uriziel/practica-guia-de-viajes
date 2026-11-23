@@ -1867,7 +1867,108 @@
         scroll-behavior: auto !important;
       }
     }
+  
+    /* Tema compartido oscuro/claro. El modo original permanece oscuro. */
+    .theme-toggle {
+      display:inline-flex; align-items:center; justify-content:center; gap:.48rem;
+      min-height:42px; padding:.48rem .78rem; border-radius:var(--radius-full);
+      border:1px solid var(--border-strong); background:var(--bg-surface);
+      color:var(--text-main); font-size:.79rem; font-weight:700; white-space:nowrap;
+      transition:background-color .25s,color .25s,border-color .25s,transform .2s;
+      flex-shrink:0;
+    }
+    .theme-toggle:hover { transform:translateY(-1px); border-color:var(--accent-gold); }
+    .theme-toggle svg { width:19px; height:19px; flex-shrink:0; }
+    .theme-toggle .theme-moon,.theme-toggle .theme-dark-label { display:none; }
+    html[data-theme="light"] .theme-toggle .theme-sun,
+    html[data-theme="light"] .theme-toggle .theme-light-label { display:none; }
+    html[data-theme="light"] .theme-toggle .theme-moon { display:block; }
+    html[data-theme="light"] .theme-toggle .theme-dark-label { display:inline; }
+    html[data-theme="light"] {
+      color-scheme:light;
+      --bg-primary:#f6f9ff;
+      --bg-secondary:#ffffff;
+      --bg-surface:#e5effb;
+      --bg-surface-hover:#d9e8fa;
+      --bg-deep:#e9f1fa;
+      --text-main:#142b46;
+      --text-secondary:#3b526d;
+      --text-muted:#36618e;
+      --accent-primary:#2363a2;
+      --accent-bright:#14558f;
+      --accent-gold:#b6790d;
+      --warning-bg:rgba(182,121,13,.12);
+      --warning-border:rgba(182,121,13,.4);
+      --warning-text:#795000;
+      --border-subtle:rgba(32,89,149,.17);
+      --border-strong:rgba(32,89,149,.35);
+      --shadow-sm:0 4px 14px rgba(31,66,104,.10);
+      --shadow-md:0 12px 28px rgba(31,66,104,.13);
+      --shadow-lg:0 22px 50px rgba(31,66,104,.18);
+    }
+    html[data-theme="light"] .site-header { background:rgba(248,251,255,.96); }
+    html[data-theme="light"] .nav-link:hover { color:#123b64; background:#dce9f7; }
+    html[data-theme="light"] .nav-link.active { background:#204f80; color:#fff; }
+    html[data-theme="light"] .drawer-link:hover,html[data-theme="light"] .drawer-link.active { color:#123b64; background:#e0edf9; }
+    html[data-theme="light"] .drawer-close:hover { color:#fff; }
+    html[data-theme="light"] .hero-split {
+      background:radial-gradient(circle at 82% 22%,rgba(106,159,230,.21) 0%,transparent 52%),
+        linear-gradient(180deg,#eff6ff 0%,var(--bg-primary) 100%);
+    }
+    html[data-theme="light"] .hero-crest-pill { background:#ecf3fb; }
+    html[data-theme="light"] .hero-title { color:#122e4c; }
+    html[data-theme="light"] .search-box { background:rgba(255,255,255,.96); }
+    html[data-theme="light"] .search-input { color:#142b46; }
+    html[data-theme="light"] .search-result-title { color:#142b46; }
+    html[data-theme="light"] .search-result-tag { background:#dce9fa; color:#174678; }
+    html[data-theme="light"] .btn-primary-action { background:#205b96; color:#fff; }
+    html[data-theme="light"] .btn-primary-action:hover { background:#b6790d; color:#101f30; }
+    html[data-theme="light"] .filter-btn:hover { color:#16416e; background:#e1edf9; }
+    html[data-theme="light"] .filter-btn.active { background:#205b96; color:#fff; border-color:#205b96; }
+    html[data-theme="light"] .entity-meta { color:#355472; }
+    html[data-theme="light"] .btn-route { color:#17406a; }
+    html[data-theme="light"] .btn-route:hover { background:#e0ebf8; color:#133859; }
+    html[data-theme="light"] .btn-gold { color:#19283c; }
+    html[data-theme="light"] .btn-gold:hover { background:#e9a52f; color:#172a41; }
+    html[data-theme="light"] .cal-day { background:#ebf2fb; color:#1d3550; }
+    html[data-theme="light"] .cal-day.empty { background:transparent; }
+    html[data-theme="light"] .cal-day.has-event { background:#205b96; color:#fff; }
+    html[data-theme="light"] .cal-day.has-event:hover,
+    html[data-theme="light"] .cal-day.selected-day { background:#e9ab31; color:#152b41; }
+    html[data-theme="light"] .cal-day.selected-day::after { background:#20395a; }
+    html[data-theme="light"] .cal-btn:hover { background:#20609d; color:#fff; }
+    html[data-theme="light"] .history-era-btn:hover,html[data-theme="light"] .history-era-btn.active { color:#fff; }
+    html[data-theme="light"] .history-highlight-box { background:#e9f2fa; }
+    html[data-theme="light"] .form-control { color:#142b46; }
+    html[data-theme="light"] .footer-heading,html[data-theme="light"] .footer-links a:hover { color:#153758; }
+    html[data-theme="light"] .site-footer { color:#46617b; }
+    html[data-theme="light"] .mini-map-box { background:#dfeaf6; }
+    html[data-theme="light"] .stat-card { background:#fff; }
+    html[data-theme="light"] .search-results-dropdown,html[data-theme="light"] .versions-popover { box-shadow:var(--shadow-lg); }
+    html[data-theme="light"] .theme-toggle { border-color:#adbfda; }
+    /* La nueva opción permanece disponible sin apretar la barra de navegación. */
+    @media (min-width:900px) and (max-width:1319px) {
+      .top-nav { display:none; }
+      .drawer-primary-group { display:block; }
+    }
+    @media (max-width:640px) {
+      .theme-toggle { width:42px; height:42px; padding:0; border-radius:50%; }
+      .theme-toggle .theme-light-label,
+      html[data-theme="light"] .theme-toggle .theme-dark-label { display:none; }
+      .header-inner { gap:.35rem; }
+      .brand-logo { gap:.4rem; font-size:.91rem; }
+      .brand-sub { font-size:.55rem; }
+      .brand-crest-badge { height:43px; padding:4px 5px; }
+    }
+
   </style>
+  <!-- Aplica el tema guardado antes de dibujar la página para evitar parpadeos. -->
+  <script>
+    try {
+      if (localStorage.getItem('valdemoro-theme') === 'light')
+        document.documentElement.dataset.theme = 'light';
+    } catch (_) { /* Modo oscuro si no está disponible el almacenamiento. */ }
+  </script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
@@ -1925,6 +2026,13 @@
         <a href="#historia" class="nav-link" data-route="historia">Historia</a>
         <a href="#que-hacer" class="nav-link" data-route="que-hacer">Qué hacer</a>
       </nav>
+
+      <!-- Selector de aspecto -->
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Activar modo claro" aria-pressed="false" title="Activar modo claro">
+          <svg class="theme-sun" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
+          <svg class="theme-moon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.9 13a9 9 0 0 1-9.9-9.9A9 9 0 1 0 20.9 13Z"/></svg>
+          <span class="theme-light-label">Modo claro</span><span class="theme-dark-label">Modo oscuro</span>
+        </button>
 
       <!-- Botón Drawer Lateral -->
       <button type="button" class="drawer-toggle" id="drawer-open-btn" aria-expanded="false" aria-controls="side-drawer" aria-label="Abrir menú lateral">
@@ -4513,6 +4621,30 @@
         updateBrowserTabTitle('Inicio');
       }
     });
+  </script>
+  <!-- Selector de tema compartido entre la memoria y la guía. -->
+  <script>
+    (() => {
+      const button = document.getElementById('theme-toggle');
+      const html = document.documentElement;
+      if (!button) return;
+      const update = () => {
+        const light = html.dataset.theme === 'light';
+        const name = light ? 'Activar modo oscuro' : 'Activar modo claro';
+        button.setAttribute('aria-label', name);
+        button.setAttribute('title', name);
+        button.setAttribute('aria-pressed', String(light));
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', light ? '#f6f9ff' : '#0f2744');
+      };
+      button.addEventListener('click', () => {
+        const next = html.dataset.theme === 'light' ? 'dark' : 'light';
+        html.dataset.theme = next;
+        try { localStorage.setItem('valdemoro-theme', next); } catch (_) { /* No bloquear el cambio visual. */ }
+        update();
+      });
+      update();
+    })();
   </script>
 </body>
 </html>
